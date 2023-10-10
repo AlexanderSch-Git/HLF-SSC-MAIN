@@ -16,6 +16,6 @@
         </style>
     </head>
     <body>
-        <h1> LET'S GO</h1>
+        <h1> LET'S GO ...</h1>
     </body>
 </html>
