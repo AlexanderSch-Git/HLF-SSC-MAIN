@@ -1,0 +1,14 @@
+
+> @ dev /home/alexander/HLF-SSC-MAIN
+> vite
+
+
+  VITE v4.4.11  ready in 671 ms
+
+  ➜  Local:   http://127.0.0.1:5173/
+  ➜  Network: use --host to expose
+  ➜  press h to show help
+
+  LARAVEL v10.26.2  plugin v0.8.1
+
+  ➜  APP_URL: http://localhost

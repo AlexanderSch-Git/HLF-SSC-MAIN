@@ -1,1 +1,1 @@
-git pull && composer install && php artisan serve --host=0.0.0.0 --port=8000
+git pull && composer install && npm run build && ./artClear &&php artisan serve --host=0.0.0.0 --port=8000
