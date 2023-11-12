@@ -40,6 +40,7 @@ export default function Base({ children }) {
                     <div className="w-full  bg-gray-300 p-4 h-full">
                         {/* Content Items */}
                         {/* Add your content here */}
+                        love
                         {children}
                     </div>
                 </div>
