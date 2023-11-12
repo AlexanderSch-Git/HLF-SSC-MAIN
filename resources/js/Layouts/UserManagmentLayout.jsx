@@ -16,6 +16,7 @@
  * Using components : Header, Menu, Footer
  * Author : Alexander Schwandes
  */
+import ApplicationLogo from "@/Components/ApplicationLogo";
 import Header from "@/Components/Header";
 import NavBar from "@/Components/NavBar";
 import { Link } from "@inertiajs/react";
@@ -28,20 +29,10 @@ export default function Base({ children }) {
                 {/* Header */}
                 <Header />
                 {/* Container flex , row */}
-                <div className="flex flex-row h-full w-full">
-                    {/* Menu */}
-                    <div className="w-72 bg-white h-full">
-                        {/* Menu Items */}
-                        {/* Add your menu items here */}
-                        <NavBar />
-                    </div>
-
-                    {/* Content */}
-                    <div className="w-full  bg-gray-300 p-4 h-full">
-                        {/* Content Items */}
-                        {/* Add your content here */}
-                        {children}
-                    </div>
+                <div className="w-full h-full bg-gray-300">
+                    {/* Content Items */}
+                    {/* Add your content here */}
+                    {children}
                 </div>
             </div>
         </>
