@@ -27,7 +27,7 @@ export default function Base({ children }) {
             {/*container*/}
             <div className="flex flex-col h-screen w-screen overflow-hidden">
                 {/* Header */}
-                <Header />
+                <Header type="auth" />
                 {/* Container flex , row */}
                 <div className="flex flex-row h-full w-full overflow-hidden">
                     {/* Menu */}
