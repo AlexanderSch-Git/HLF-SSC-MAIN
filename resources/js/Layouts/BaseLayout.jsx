@@ -19,16 +19,17 @@
 import Header from "@/Components/Header";
 import NavBar from "@/Components/NavBar";
 import { Link } from "@inertiajs/react";
+import MonthRow from "@/Components/MonthRow";
 
 export default function Base({ children }) {
     return (
         <>
             {/*container*/}
-            <div className="flex flex-col h-screen w-screen">
+            <div className="flex flex-col h-screen w-screen overflow-hidden">
                 {/* Header */}
                 <Header />
                 {/* Container flex , row */}
-                <div className="flex flex-row h-full w-full">
+                <div className="flex flex-row h-full w-full overflow-hidden">
                     {/* Menu */}
                     <div className="w-72 bg-white h-full">
                         {/* Menu Items */}
@@ -37,10 +38,9 @@ export default function Base({ children }) {
                     </div>
 
                     {/* Content */}
-                    <div className="w-full  bg-gray-300 p-4 h-full">
+                    <div className="w-full  bg-gray-300 p-4 h-full overflow-hidden">
                         {/* Content Items */}
                         {/* Add your content here */}
-                        love
                         {children}
                     </div>
                 </div>

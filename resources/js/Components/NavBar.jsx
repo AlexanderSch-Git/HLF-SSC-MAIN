@@ -12,31 +12,63 @@ export default function NavBar(props) {
     //temporary example of data (list of cours) to be replaced by the data from the database
 
     const courses = [
-        "Introduction à la programmation",
-        "Algorithmique et structures de données",
-        "Programmation orientée objet",
-        "Bases de données",
-        "Systèmes d'exploitation",
-        "Réseaux informatiques",
-        "Sécurité informatique",
-        "Développement web",
-        "Applications mobiles",
-        "Intelligence artificielle",
-        "Apprentissage automatique",
-        "Traitement du langage naturel",
-        "Vision par ordinateur",
-        "Robotique",
-        "Informatique théorique",
-        "Théorie des graphes",
-        "Cryptographie",
-        "Analyse de données",
-        "Visualisation de données",
-        "Statistiques",
-        "Probabilités",
-        "Optimisation",
-        "Recherche opérationnelle",
-        "Modélisation mathématique",
-        "Simulation",
+        { titre: "Informatique", initiales: "I", couleur: "#A81C7D" },
+        { titre: "Réseaux", initiales: "R", couleur: "#6B8E23" },
+        { titre: "Programmation", initiales: "P", couleur: "#FF5733" },
+        { titre: "Base de données", initiales: "BD", couleur: "#2271B3" },
+        { titre: "Sécurité", initiales: "S", couleur: "#FDD017" },
+        {
+            titre: "Intelligence Artificielle",
+            initiales: "IA",
+            couleur: "#7D26CD",
+        },
+        { titre: "Développement Web", initiales: "DW", couleur: "#8B4513" },
+        { titre: "Analyse de Données", initiales: "AD", couleur: "#FF4500" },
+        { titre: "Ingénierie Logicielle", initiales: "IL", couleur: "#6495ED" },
+        { titre: "Réseaux Sociaux", initiales: "RS", couleur: "#008000" },
+        {
+            titre: "Systèmes d'Exploitation",
+            initiales: "SE",
+            couleur: "#9932CC",
+        },
+        { titre: "Cloud Computing", initiales: "CC", couleur: "#FFD700" },
+        { titre: "Génie Logiciel", initiales: "GL", couleur: "#8B008B" },
+        {
+            titre: "Conception de Sites Web",
+            initiales: "CSW",
+            couleur: "#4682B4",
+        },
+        { titre: "Cryptographie", initiales: "C", couleur: "#1E90FF" },
+        { titre: "Gestion de Projet", initiales: "GP", couleur: "#8A2BE2" },
+        { titre: "Commerce Électronique", initiales: "CE", couleur: "#DC143C" },
+        { titre: "Développement Mobile", initiales: "DM", couleur: "#7FFF00" },
+        { titre: "Robotique", initiales: "R", couleur: "#8B0000" },
+        {
+            titre: "Langages de Programmation",
+            initiales: "LP",
+            couleur: "#00CED1",
+        },
+        {
+            titre: "Architecture des Ordinateurs",
+            initiales: "AO",
+            couleur: "#191970",
+        },
+        { titre: "Traitement de l'Image", initiales: "TI", couleur: "#FF6347" },
+        { titre: "Systèmes Embarqués", initiales: "SE", couleur: "#9932CC" },
+        { titre: "Big Data", initiales: "BD", couleur: "#32CD32" },
+        { titre: "Analyse de Risques", initiales: "AR", couleur: "#FF4500" },
+        { titre: "Design UX/UI", initiales: "DU", couleur: "#8B4513" },
+        {
+            titre: "Technologies Web Avancées",
+            initiales: "TWA",
+            couleur: "#A52A2A",
+        },
+        { titre: "Développement Agile", initiales: "DA", couleur: "#FF69B4" },
+        {
+            titre: "Développement Full Stack",
+            initiales: "DFS",
+            couleur: "#8B4513",
+        },
     ];
 
     //return the component
@@ -49,7 +81,13 @@ export default function NavBar(props) {
                     <NavBarTitleItem title="MENU" />
                     <div className="flex flex-row align-middle items-center space-x-2">
                         {/*Icon w30 h30*/}
-                        <div className="w-7 h-7 bg-black"> </div>
+                        <div className="w-8 h-8 bg-primRed text-white rounded-full flex align-middle items-center justify-center">
+                            <img
+                                src="img/Account.svg"
+                                alt="Mes cours icone"
+                                className="p-2"
+                            />
+                        </div>
                         {/*item Lato 18px bold  #575962*/}
                         <h1 className="text-18px font-bold text-#575962">
                             Mes Cours
@@ -59,18 +97,23 @@ export default function NavBar(props) {
                             onClick={handleExtend}
                             className="cursor-pointer text-#575962"
                         >
-                            {extend ? "/" : "V"}
+                            {extend ? (
+                                <img src="/img/ChevronUp.svg" alt="extend" />
+                            ) : (
+                                <img src="/img/ChevronDown.svg" alt="extend" />
+                            )}
                         </div>
                     </div>
                     {/*if extended display a div of h260px that contains all courses of the courses array, and is scrollable verticaly*/}
                     {extend && (
                         <div className="h-64 overflow-y-scroll">
-                            {/*map the array of courses to create a CoursItem for each one*/}
-                            {courses.map((course, index) => (
+                            {courses.map((course) => (
                                 <CoursItem
-                                    key={index}
-                                    title={course}
-                                ></CoursItem>
+                                    key={course.titre}
+                                    titre={course.titre}
+                                    initiales={course.initiales}
+                                    couleur={course.couleur}
+                                />
                             ))}
                         </div>
                     )}

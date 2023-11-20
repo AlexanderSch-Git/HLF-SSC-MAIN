@@ -30,7 +30,11 @@ export default function Login({ status, canResetPassword }) {
         <GuestLayout>
             <Head title="Log in" />
 
-            {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
+            {status && (
+                <div className="mb-4 font-medium text-sm text-green-600">
+                    {status}
+                </div>
+            )}
 
             <h1> HELLOOOOO </h1>
             <form onSubmit={submit}>
@@ -69,8 +73,16 @@ export default function Login({ status, canResetPassword }) {
 
                 <div className="block mt-4">
                     <label className="flex items-center">
-                        <Checkbox name="remember" checked={data.remember} onChange={(e) => setData("remember", e.target.checked)} />
-                        <span className="ml-2 text-sm text-gray-600">Remember me</span>
+                        <Checkbox
+                            name="remember"
+                            checked={data.remember}
+                            onChange={(e) =>
+                                setData("remember", e.target.checked)
+                            }
+                        />
+                        <span className="ml-2 text-sm text-gray-600">
+                            Remember me
+                        </span>
                     </label>
                 </div>
 
@@ -89,6 +101,14 @@ export default function Login({ status, canResetPassword }) {
                     </PrimaryButton>
                 </div>
             </form>
+            <div className="flex items-center justify-end mt-4">
+                <Link
+                    href={route("register")}
+                    className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                >
+                    Don't have an account?
+                </Link>
+            </div>
         </GuestLayout>
     );
 }
