@@ -1,7 +1,10 @@
 // return image logo of the application uses resources/images/logo-light.png
 export default function ApplicationLogo(props) {
     return (
-        <a className="object-fill h-full" href="/">
+        <a
+            className="object-fill h-full flex justify-center items-center align-middle w-72"
+            href="/"
+        >
             {/* img fitting on height */}
             <img
                 src="/img/logo-light.png"

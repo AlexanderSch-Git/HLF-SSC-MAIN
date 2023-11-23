@@ -10,9 +10,9 @@ import TextInput from "@/Components/TextInput";
 export default function Header(props) {
     return (
         <>
-            <div className="h-24 flex bg-primBlue w-full">
+            <div className="h-24 flex flex-row bg-primBlue w-full">
                 {/* Header Logo */}
-                <div className="w-72 object-contain flex items-center justify-center">
+                <div className="w-72 object-contain">
                     <ApplicationLogo />
                 </div>
                 {/* If props.type != guest then render next */}
@@ -38,11 +38,11 @@ export default function Header(props) {
                                     />
                                 </form>
                             </div>
-                            <div className="flex flex-row items-center space-x-4">
-                                <div className="w-8 h-8 flex items-center justify-center">
+                            <div className="flex flex-row items-center align-bottom justify-end space-x-4 w-full">
+                                <div className="w-8 h-8 flex items-center justify-center bg-white rounded-full text-primRed">
                                     <FontAwesomeIcon icon={faBell} />
                                 </div>
-                                <div className="w-8 h-8 flex items-center justify-center">
+                                <div className="w-8 h-8 flex items-center justify-center bg-white rounded-full text-primRed">
                                     <a href="/login">
                                         <FontAwesomeIcon icon={faUser} />
                                     </a>

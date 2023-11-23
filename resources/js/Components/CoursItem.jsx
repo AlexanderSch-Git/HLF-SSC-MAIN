@@ -17,36 +17,36 @@ export default function CoursItem(props) {
     };
     return (
         <>
-            {/*Cours item component  */}
             <div
-                className={`w-160 h-42 border-1 border-solid border-${
-                    checked ? "#575962" : "#575962"
-                } opacity-${
-                    checked ? "0.2" : "1"
-                } flex items-center justify-between px-10`}
+                className="w-full text-s h-6 flex flex-row whitespace-nowrap items-center space-x-2 pl-2 "
+                style={{
+                    borderLeft: checked
+                        ? "2px solid #FFF"
+                        : "2px solid #575962",
+                    color: checked ? "#A9AAB1" : "#575962",
+                    fontWeight: checked ? "normal" : "bold",
+                }}
             >
-                {/*Cours Icon */}
                 <div
                     onClick={handleCheck}
-                    className={`cursor-pointer text-${
-                        checked ? "#575962" : "#1F283E"
-                    }`}
+                    className="w-4 h-4 flex align-middle items-center justify-center text-xs"
                 >
                     {checked ? (
-                        <FontAwesomeIcon icon={faEyeSlash} />
+                        <FontAwesomeIcon
+                            icon={faEyeSlash}
+                            className="text-#575962"
+                        />
                     ) : (
-                        <FontAwesomeIcon icon={faEye} />
+                        <FontAwesomeIcon
+                            icon={faEye}
+                            className="text-#575962"
+                        />
                     )}
                 </div>
-                {/*Cours Title */}
-                <div
-                    className={`w-28 whitespace-nowrap overflow-hidden text-${
-                        checked ? "#A9AAB1" : "#1F283E"
-                    } font-bold text-18px`}
-                >
-                    {props.initiales}
+                <div className="whitespace-nowrap w-full overflow-hidden ">
+                    {props.initiales} {props.titre}
                 </div>
             </div>
-        </> /*Cours item component  */
+        </>
     );
 }
