@@ -3,7 +3,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import HumainLayout from "@/Layouts/HumainLayout";
 import { Link } from "@inertiajs/react";
 
-const Index = ({ humains }) => {
+const Search = ({ humains }) => {
     // parcours la liste des humains et les stockes dans une variable en ayant transformer la date en format string fr and concat les noms et prenoms si ils sont pas vide grace une ternaire
     const Nhumains = humains.map((humain) => {
         return {
@@ -25,7 +25,7 @@ const Index = ({ humains }) => {
     return (
         <HumainLayout>
             <div className="bg-white p-4">
-                <h1 className="text-2xl font-bold">Liste des humains</h1>
+                <h1 className="text-2xl font-bold">Résultat de la recherche</h1>
                 <table className="table-auto w-full border">
                     <thead>
                         <tr>
@@ -39,7 +39,11 @@ const Index = ({ humains }) => {
                     <tbody>
                         {Nhumains.map((humain) => (
                             <tr key={humain.id}>
-                                <td className="border">{humain.noms}</td>
+                                <td className="border">
+                                    <Link href={"/humain/" + humain.id}>
+                                        {humain.noms}
+                                    </Link>
+                                </td>
                                 <td className="border">{humain.prenoms}</td>
                                 <td className="border">
                                     {humain.date_de_naissance}
@@ -55,4 +59,4 @@ const Index = ({ humains }) => {
     );
 };
 
-export default Index;
+export default Search;

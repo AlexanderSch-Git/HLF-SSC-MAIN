@@ -28,6 +28,7 @@ class HumainController extends Controller
     public function show($id)
     {
         try {
+            Log::info('HumainController@show');
             $humain = Humain::findOrFail($id);
             return Inertia::render('Humain/Show', ['humain' => $humain]);
         } catch (ModelNotFoundException $e) {
@@ -35,6 +36,17 @@ class HumainController extends Controller
         }
     }
 
+    // Afficher la page pour créer un humain
+    public function create()
+    {
+        try {
+            Log::info('HumainController@create');
+            return Inertia::render('Humain/Create');
+        } catch (ModelNotFoundException $e) {
+            Log::error($e);
+            return Inertia::render('Error', ['message' => 'Humain not found.']);
+        }
+    }
     // Créer un nouvel humain
     public function store(Request $request)
     {
@@ -88,13 +100,25 @@ class HumainController extends Controller
     // Rechercher un humain par son nom parmis les 3
     public function searchByName(Request $request)
     {
-        $searchName = $request->input('searchName');
-
-        $humains = Humain::where('nom1', 'LIKE', '%' . $searchName . '%')
-            ->orWhere('nom2', 'LIKE', '%' . $searchName . '%')
-            ->orWhere('nom3', 'LIKE', '%' . $searchName . '%')
-            ->get();
-        return Inertia::render('Humain/SearchResults', ['humains' => $humains]);
+        try {
+            Log::info('HumainController@searchByName');
+            //récupere la valeur "nom" de la request et la valide (doit etre alpha)
+            $validatedData = $request->validate([
+                'nom' => 'required|alpha',
+            ]);
+            //récupere la valeur "nom" validée
+            $searchName = $validatedData['nom'];
+            Log::info($searchName);
+            $humains = Humain::where('nom1', 'LIKE', '%' . $searchName . '%')
+                ->orWhere('nom2', 'LIKE', '%' . $searchName . '%')
+                ->orWhere('nom3', 'LIKE', '%' . $searchName . '%')
+                ->get();
+            Log::info($humains);
+            return Inertia::render('Humain/SearchResults', ['humains' => $humains]);
+        } catch (ModelNotFoundException $e) {
+            Log::error($e);
+            return Inertia::render('Error', ['message' => 'Humain not found.']);
+        }
     }
 
     // Rechercher un humain par son prenom parmis les 3
@@ -185,6 +209,18 @@ class HumainController extends Controller
 
             return Inertia::render('Humain/index', ['message' => 'Humain supprimé']);
         } catch (ModelNotFoundException $e) {
+            return Inertia::render('Error', ['message' => 'Humain not found.']);
+        }
+    }
+
+    // Afficher la page pour chercher un humain
+    public function showSearch()
+    {
+        try {
+            Log::info('HumainController@showSearch');
+            return Inertia::render('Humain/Search');
+        } catch (ModelNotFoundException $e) {
+            Log::error($e);
             return Inertia::render('Error', ['message' => 'Humain not found.']);
         }
     }

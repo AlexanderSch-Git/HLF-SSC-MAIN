@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HumainController;
+use App\Http\Controllers\ProfController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -43,6 +44,19 @@ Route::post('/humain', [HumainController::class, 'store'])->middleware(['auth', 
 Route::get('/humains', [HumainController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('humains.index');
+Route::get('/humain/create', [HumainController::class, 'create'])->middleware(['auth', 'verified'])->name('humain.create');
+Route::get('/humain/search', [HumainController::class, 'showSearch'])->middleware(['auth', 'verified'])->name('humain.search');
+//searchbyname
+Route::get('/humain/searchbyname', [HumainController::class, 'searchByName'])->middleware(['auth', 'verified'])->name('humain.searchbyname');
 
+Route::get('/humain/{id}', [HumainController::class, 'show'])->middleware(['auth', 'verified'])->name('humain.show');
+
+Route::get('profs', [ProfController::class, 'index'])->middleware(['auth', 'verified'])->name('profs.index');
+Route::post('prof/promote', [ProfController::class, 'store'])->middleware(['auth', 'verified'])->name('prof.promote');
+Route::get('prof/search', [ProfController::class, 'showSearch'])->middleware(['auth', 'verified'])->name('prof.search');
+Route::get('prof/searchbyname', [ProfController::class, 'searchByName'])->middleware(['auth', 'verified'])->name('prof.searchbyname');
+Route::post('prof/demote', [ProfController::class, 'destroy'])->middleware(['auth', 'verified'])->name('prof.demote');
+
+Route::get('prof/{id}', [ProfController::class, 'show'])->middleware(['auth', 'verified'])->name('prof.show');
 
 require __DIR__ . '/auth.php';
