@@ -4,6 +4,7 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faBell,
+    faBook,
     faEye,
     faEyeSlash,
     faPersonCircleMinus,
@@ -95,11 +96,7 @@ export default function NavBar(props) {
                     <div className="flex flex-row align-middle items-center space-x-2">
                         {/*Icon w30 h30*/}
                         <div className="w-8 h-8 bg-primRed text-white rounded-full flex align-middle items-center justify-center">
-                            <img
-                                src="img/Account.svg"
-                                alt="Mes cours icone"
-                                className="p-2"
-                            />
+                            <FontAwesomeIcon icon={faBook} />
                         </div>
                         {/*item Lato 18px bold  #575962*/}
                         <h1 className="text-18px font-bold text-#575962 famil">

@@ -112,4 +112,19 @@ class ProfController extends Controller
             return Inertia::render('Error', ['message' => 'Prof not found.']);
         }
     }
+
+    //accesseur public pour les profs
+    public static function getProfs()
+    {
+        try {
+            Log::info('ProfController@getProfs');
+            $profs = Prof::join('humains', 'profs.humain_id', '=', 'humains.id')
+                ->select('profs.id as pid', 'humains.*')
+                ->get();
+            return $profs;
+        } catch (ModelNotFoundException $e) {
+            Log::error($e);
+            return Inertia::render('Error', ['message' => 'Prof not found.']);
+        }
+    }
 }

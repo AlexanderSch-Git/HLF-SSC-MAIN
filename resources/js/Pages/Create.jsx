@@ -1,4 +1,4 @@
-import AuthenticatedLayout from f
+import AuthenticatedLayout from "@/Components/Layouts/AuthenticatedLayout";     
 import { useState } from "react";
 import InputLabel from "@/Components/InputLabel";
 import InputError from "@/Components/InputError";
@@ -12,81 +12,7 @@ export default function Create({ auth }) {
 
     return (
         <AuthenticatedLayout>
-            <div className="flex flex-row space-x-4 mb-4 w-full justify-end">
-                <button
-                    className=" border-1 rounded-xl p-2 w-20"
-                    style={{
-                        backgroundColor:
-                            activeForm === "human" ? "#E6596E" : "#FFFFFF",
-                        color: activeForm === "human" ? "#FFFFFF" : "#000",
-                    }}
-                    onClick={() => setActiveForm("human")}
-                >
-                    Humain
-                </button>
-                <button
-                    className=" border-1 rounded-xl p-2 w-20"
-                    style={{
-                        backgroundColor:
-                            activeForm === "prof" ? "#E6596E" : "#FFFFFF",
-                        color: activeForm === "prof" ? "#FFFFFF" : "#000",
-                    }}
-                    onClick={() => setActiveForm("prof")}
-                >
-                    Prof
-                </button>
-                <button
-                    className=" border-1 rounded-xl p-2 w-20"
-                    style={{
-                        backgroundColor:
-                            activeForm === "course" ? "#E6596E" : "#FFFFFF",
-                        color: activeForm === "course" ? "#FFFFFF" : "#000",
-                    }}
-                    onClick={() => setActiveForm("course")}
-                >
-                    Cours
-                </button>
-                <button
-                    className=" border-1 rounded-xl p-2 w-20"
-                    style={{
-                        backgroundColor:
-                            activeForm === "session" ? "#E6596E" : "#FFFFFF",
-                        color: activeForm === "session" ? "#FFFFFF" : "#000",
-                    }}
-                    onClick={() => setActiveForm("session")}
-                >
-                    Séance
-                </button>
-            </div>
-
-            {activeForm === "human" && hmmnbs}
-
-            {activeForm === "prof" && (
-                <div className="bg-white p-4">
-                    <h1 className="text-2xl font-bold">Créer un prof</h1>
-                    <p>To do: Créer un prof</p>
-                    // liste des humain non prof et bouton pour en faire un prof
-                    <table className="table-auto">
-                        <thead>
-                            <tr>
-                                <th className="px-4 py-2">Nom</th>
-                                <th className="px-4 py-2">Prénom</th>
-                                <th className="px-4 py-2">Promote</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td className="border px-4 py-2">Doe</td>
-                                <td className="border px-4 py-2">John</td>
-                                <td className="border px-4 py-2">
-                                    <button>+</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            )}
-
+            
             {activeForm === "course" && (
                 <div className="bg-white p-4">
                     <h1 className="text-2xl font-bold">Créer un cours</h1>
