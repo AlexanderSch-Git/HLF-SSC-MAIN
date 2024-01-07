@@ -28,6 +28,7 @@ export default function Search({ children }) {
         switch (field) {
             case "nom":
                 console.log("nom");
+                router.get("/cour/searchbyname", values);
                 break;
             case "ue":
                 console.log("prenom");
@@ -103,7 +104,6 @@ export default function Search({ children }) {
                         </button>
                     </form>
                 </div>
-                
             </div>
         </CoursLayout>
     );

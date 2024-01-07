@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HumainController;
 use App\Http\Controllers\CoursController;
 use App\Http\Controllers\ProfController;
+use App\Http\Controllers\SeanceController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -72,4 +73,7 @@ Route::get('cour/searchbyname', [CoursController::class, 'searchByName'])->middl
 
 Route::get('cour/{id}', [CoursController::class, 'show'])->middleware(['auth', 'verified'])->name('cours.show');
 
+//routes pour la gestion des seances
+Route::get('seances', [SeanceController::class, 'index'])->middleware(['auth', 'verified'])->name('seances.index');
+Route::get('seance/create', [SeanceController::class, 'create'])->middleware(['auth', 'verified'])->name('seance.create');
 require __DIR__ . '/auth.php';

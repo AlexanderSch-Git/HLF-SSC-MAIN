@@ -6,6 +6,7 @@ import {
     faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import TextInput from "@/Components/TextInput";
+import { Link } from "@inertiajs/react";
 
 export default function Header(props) {
     return (
@@ -15,8 +16,8 @@ export default function Header(props) {
                 <div className="w-72 object-contain">
                     <ApplicationLogo />
                 </div>
-                {/* If props.type != guest then render next */}
-                {props.type != "guest" && (
+                {/* If props.type == auth then render next */}
+                {props.type == "auth" && (
                     <>
                         {/* Header Search Bar */}
                         <div className="w-full flex flew-row items-center p-3">
@@ -47,6 +48,24 @@ export default function Header(props) {
                                         <FontAwesomeIcon icon={faUser} />
                                     </a>
                                 </div>
+                            </div>
+                        </div>
+                    </>
+                )}
+                {props.type == "admin" && (
+                    <>
+                        <div className="flex flex-row items-center space-x-4">
+                            <div className="w-36 h-8 flex items-center justify-center bg-white rounded-full text-primRed">
+                                <Link href="/humains">humain</Link>
+                            </div>
+                            <div className="w-36 h-8 flex items-center justify-center bg-white rounded-full text-primRed">
+                                <Link href="/profs">professeurs</Link>
+                            </div>
+                            <div className="w-36 h-8 flex items-center justify-center bg-white rounded-full text-primRed">
+                                <Link href="/cours">cours</Link>
+                            </div>
+                            <div className="w-36 h-8 flex items-center justify-center bg-white rounded-full text-primRed">
+                                <Link href="/seances">séance</Link>
                             </div>
                         </div>
                     </>

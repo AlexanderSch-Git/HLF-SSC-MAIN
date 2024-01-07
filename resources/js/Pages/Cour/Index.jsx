@@ -4,6 +4,7 @@ import { Link } from "@inertiajs/react";
 import CoursLayout from "@/Layouts/CoursLayout";
 
 const Index = ({ cours }) => {
+    console.log(cours);
 
     return (
         <CoursLayout>
@@ -20,12 +21,8 @@ const Index = ({ cours }) => {
                     <tbody>
                         {cours.map((cour) => (
                             <tr key={cour.id}>
-                                <td className="border px-4 py-2">
-                                    {cour.nom}
-                                </td>
-                                <td className="border px-4 py-2">
-                                    {cour.ue}
-                                </td>
+                                <td className="border px-4 py-2">{cour.nom}</td>
+                                <td className="border px-4 py-2">{cour.ue}</td>
                                 <td className="border px-4 py-2">
                                     {cour.prof}
                                 </td>
