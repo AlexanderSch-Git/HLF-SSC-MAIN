@@ -1,4 +1,4 @@
-import AuthenticatedLayout from "@/Components/Layouts/AuthenticatedLayout";     
+import AuthenticatedLayout from "@/Components/Layouts/AuthenticatedLayout";
 import { useState } from "react";
 import InputLabel from "@/Components/InputLabel";
 import InputError from "@/Components/InputError";
@@ -8,11 +8,8 @@ import React from "react";
 export default function Create({ auth }) {
     const [activeForm, setActiveForm] = useState("human");
 
-
-
     return (
         <AuthenticatedLayout>
-            
             {activeForm === "course" && (
                 <div className="bg-white p-4">
                     <h1 className="text-2xl font-bold">Créer un cours</h1>
@@ -87,4 +84,3 @@ export default function Create({ auth }) {
         </AuthenticatedLayout>
     );
 }
-
