@@ -1,4 +1,4 @@
-import AuthenticatedLayout from "@/Components/Layouts/AuthenticatedLayout";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { useState } from "react";
 import InputLabel from "@/Components/InputLabel";
 import InputError from "@/Components/InputError";
