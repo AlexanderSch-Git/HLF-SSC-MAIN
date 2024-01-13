@@ -2,10 +2,24 @@ import React from "react";
 import SeanceLayout from "@/Layouts/SeanceLayout";
 import { Link } from "@inertiajs/react";
 
-const Index = ({ cours, seances }) => {
+const Index = ({ Seances, Cours }) => {
     //state pour stocker le cours selectionné
     const [selectedCours, setSelectedCours] = React.useState(null);
+    console.log("selectedCours", selectedCours);
 
+    // create a dictionary of seances by cours_id
+    const seancesByCours = {};
+    Cours.forEach((cours) => {
+        seancesByCours[cours.id] = [];
+    });
+    Seances.forEach((seance) => {
+        seancesByCours[seance.cours_id].push(seance);
+    });
+    console.log("seancesByCours", seancesByCours);
+
+    function convToLocal(date) {
+        console.log("date", date);
+    }
     return (
         <SeanceLayout>
             <div className="bg-white p-4">
@@ -16,42 +30,72 @@ const Index = ({ cours, seances }) => {
                 selectionné */
                 <div className="flex flex-col">
                     <div>
-                        <h1 className="text-2xl font-bold">
-                            {selectedCours && selectedCours.nom
-                                ? selectedCours.nom
-                                : "Aucun cours selectionné"}
-                        </h1>
-                        <p>
-                            {selectedCours && selectedCours.ue
-                                ? selectedCours.ue
-                                : "UE: n/a"}
-                        </p>
-                        <p>
-                            {selectedCours &&
-                            selectedCours.prof &&
-                            selectedCours.pid ? (
-                                // ici insérer un bouton qui permet de naviguer vers la page du prof
-                                <button>
-                                    // va vers prof avec id du prof
-                                    <Link href={"/prof/" + selectedCours.pid}>
-                                        {selectedCours.prof}
+                        {selectedCours ? (
+                            <>
+                                <h1 className="text-2xl font-bold">
+                                    {selectedCours.nom_user}
+                                </h1>
+                                <p>UE: {selectedCours.nom_ue}</p>
+                                <button className="bg-blue-500 text-white p-2 rounded-md">
+                                    <Link
+                                        href={`/prof/${selectedCours.prof_id}`}
+                                    >
+                                        {selectedCours.prof_id}
                                     </Link>
                                 </button>
-                            ) : (
-                                "Prof: n/a"
-                            )}
-                        </p>
+                            </>
+                        ) : (
+                            <>
+                                <h1 className="text-2xl font-bold">
+                                    Aucun cours selectionné
+                                </h1>
+                            </>
+                        )}
                     </div>
                     <div className="flex w-full">
                         <div className="flex flex-col w-1/4 border-2">
                             <h1 className="text-2xl font-bold">
                                 Liste des cours
                             </h1>
+                            <ul>
+                                {Cours.map((cours) => (
+                                    <li key={cours.id}>
+                                        <button
+                                            onClick={() =>
+                                                setSelectedCours(cours)
+                                            }
+                                        >
+                                            {cours.nom_user}
+                                        </button>
+                                    </li>
+                                ))}
+                            </ul>
                         </div>
                         <div className="flex flex-col w-3/4 border-2">
                             <h1 className="text-2xl font-bold">
-                                Séances disponibles
+                                Liste des seances
                             </h1>
+                            {selectedCours ? (
+                                <>
+                                    <ul>
+                                        {seancesByCours[selectedCours.id].map(
+                                            (seance) => (
+                                                <li key={seance.id}>
+                                                    <Link
+                                                        href={`/seance/${seance.id}`}
+                                                    >
+                                                        {seance.date +
+                                                            " " +
+                                                            seance.heure_debut +
+                                                            " " +
+                                                            seance.heure_fin}
+                                                    </Link>
+                                                </li>
+                                            )
+                                        )}
+                                    </ul>
+                                </>
+                            ) : null}
                         </div>
                     </div>
                 </div>

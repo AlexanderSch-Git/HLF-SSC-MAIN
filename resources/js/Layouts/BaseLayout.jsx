@@ -21,7 +21,7 @@ import NavBar from "@/Components/NavBar";
 import { Link } from "@inertiajs/react";
 import MonthRow from "@/Components/MonthRow";
 
-export default function Base({ children }) {
+export default function Base(props) {
     return (
         <>
             {/*container*/}
@@ -34,14 +34,14 @@ export default function Base({ children }) {
                     <div className="w-72 bg-white h-full">
                         {/* Menu Items */}
                         {/* Add your menu items here */}
-                        <NavBar />
+                        <NavBar {...props} />
                     </div>
 
                     {/* Content */}
                     <div className="w-full  bg-gray-300 p-4 h-full overflow-hidden">
                         {/* Content Items */}
                         {/* Add your content here */}
-                        {children}
+                        {props.children}
                     </div>
                 </div>
             </div>

@@ -23,8 +23,7 @@ class CoursController extends Controller
                 ->select('cours.*', 'humains.nom1', 'humains.prenom1', 'humains.id as pid')
                 ->get();
             // créer un array de cours avec chaque cours ayant pour attributs :
-            // id , nom , ue , prof ( = nom1 + " " + prenom1)
-            Log::info($cours);
+            // id , nom , ue , prof ( = nom1 + " " + prenom1);
             $coursArray = [];
             foreach ($cours as $c) {
                 $coursArray[] = [
@@ -52,7 +51,6 @@ class CoursController extends Controller
                 ->join('humains', 'profs.humain_id', '=', 'humains.id')
                 ->select('cours.id as cid', 'cours.*', 'humains.nom1', 'humains.prenom1', 'humains.id as pid')
                 ->findOrFail($id);
-            Log::info($cour);
             return Inertia::render('Cour/Show', [
                 'cour' => $cour
             ]);
@@ -68,7 +66,6 @@ class CoursController extends Controller
             Log::info('CoursController.create: ');
             //get profs
             $profs = ProfController::getProfs();
-            Log::info($profs);
 
             //créer un tableau [label => nom1 + " " + prenom1 , value => id]
             //exemple const options = [{ value: '1', label: 'Dupont Claude' }, { value: '2', label: 'Dupont Claude' }];
@@ -106,7 +103,6 @@ class CoursController extends Controller
                     'nom_ue' => $request->ue,
                     'prof_id' => $request->prof
                 ];
-            Log::info($cours);
             $coursnew = Cours::create($cours);
             //rediriger vers la page show avec id
             return $this->show($coursnew->id);
@@ -138,7 +134,6 @@ class CoursController extends Controller
             ]);
             $cours = Cours::where('nom_user', 'like', '%' . $request->nom . '%')->get();
             $coursArray = [];
-            Log::info($cours);
             /*
             exemple de cours {
                 "id":1,
@@ -178,7 +173,6 @@ class CoursController extends Controller
                 ->get();
             // créer un array de cours avec chaque cours ayant pour attributs :
             // id , nom , ue , prof ( = nom1 + " " + prenom1)
-            Log::info($cours);
             $coursArray = [];
             foreach ($cours as $c) {
                 $coursArray[] = [

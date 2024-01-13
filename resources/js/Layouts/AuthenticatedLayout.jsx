@@ -6,9 +6,9 @@ import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import { Link } from "@inertiajs/react";
 import Base from "./BaseLayout";
 
-export default function Authenticated({ user, header, children }) {
+export default function Authenticated(props) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
 
-    return <Base>{children}</Base>;
+    return <Base {...props}>{props.children}</Base>;
 }

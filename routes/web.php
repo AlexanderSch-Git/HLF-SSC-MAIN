@@ -3,6 +3,10 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HumainController;
 use App\Http\Controllers\CoursController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\GroupeClasseController;
+use App\Http\Controllers\InscriptionsController;
+use App\Http\Controllers\OptionController;
 use App\Http\Controllers\ProfController;
 use App\Http\Controllers\SeanceController;
 use Illuminate\Foundation\Application;
@@ -29,9 +33,6 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/create', function () {
     return Inertia::render('Create');
 })->middleware(['auth', 'verified'])->name('create');
@@ -76,4 +77,25 @@ Route::get('cour/{id}', [CoursController::class, 'show'])->middleware(['auth', '
 //routes pour la gestion des seances
 Route::get('seances', [SeanceController::class, 'index'])->middleware(['auth', 'verified'])->name('seances.index');
 Route::get('seance/create', [SeanceController::class, 'create'])->middleware(['auth', 'verified'])->name('seance.create');
+Route::post('seance', [SeanceController::class, 'store'])->middleware(['auth', 'verified'])->name('seance.store');
+
+//routes pour la gestion des options
+Route::get('options', [OptionController::class, 'index'])->middleware(['auth', 'verified'])->name('options.index');
+Route::get('option/create', [OptionController::class, 'create'])->middleware(['auth', 'verified'])->name('option.create');
+Route::post('option', [OptionController::class, 'store'])->middleware(['auth', 'verified'])->name('option.store');
+Route::get('option/{id}', [OptionController::class, 'show'])->middleware(['auth', 'verified'])->name('option.show');
+
+//routes pour la gestion des groupesclasses
+Route::get('gcs', [GroupeClasseController::class, 'index'])->middleware(['auth', 'verified'])->name('gcs.index');
+Route::get('gc/create', [GroupeClasseController::class, 'create'])->middleware(['auth', 'verified'])->name('gc.create');
+Route::post('gc', [GroupeClasseController::class, 'store'])->middleware(['auth', 'verified'])->name('gc.store');
+Route::get('gc/{id}', [GroupeClasseController::class, 'show'])->middleware(['auth', 'verified'])->name('gc.show');
+
+//dashboard
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+
+//inscriptions
+Route::post('/inscription', [InscriptionsController::class, 'store'])->middleware(['auth', 'verified'])->name('inscription.store');
+Route::post('/desinscription', [InscriptionsController::class, 'destroy'])->middleware(['auth', 'verified'])->name('desinscription.destroy');
+
 require __DIR__ . '/auth.php';

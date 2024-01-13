@@ -1,6 +1,7 @@
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import SeanceLayout from "@/Layouts/SeanceLayout";
+import { router } from "@inertiajs/react";
 import {
     DatePicker,
     LocalizationProvider,
@@ -9,56 +10,11 @@ import {
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import React from "react";
 import Select from "react-select";
-
-export default function Create({ Cours, Profs }) {
-    /*
-    Les données a récupérer sont :
-    - Prof
-    - Cour
-    - DateDeDebut
-    - HeureDeDebut
-    - HeureDeFin
-    - Mode {Presentiel, Comodal, Distanciel}
-    - GroupeClass
-    - Lieu
-    - Visio
-    - Periodicite ou :
-        - 0 : Pas de periodicité donc une seule séance
-        - 1 : custom :
-            - Date de fin
-            - Nombre de répétition
-            - Répétition : entier
-            - Unité : {Jour, Semaine}
-            - Jours : {Lundi, Mardi, Mercredi, Jeudi, Vendredi, Samedi, Dimanche}
-
-
-    Règles de validation :
-    - Prof : Obligatoire
-    - Cour : Obligatoire
-    - DateDeDebut : Obligatoire
-    - HeureDeDebut : Obligatoire
-    - HeureDeFin : Obligatoire
-    - Mode : Obligatoire
-    - GroupeClass : Obligatoire
-
-    Si Mode = Presentiel ou Comodal : Lieu obligatoire
-    Si Mode = Distanciel ou Comodal : Visio possible (on ne sait pas forcément la plateforme 6 mois à l'avance)
-    Si Mode = Distanciel : Lieu impossible
-    Si Mode = Presentiel : Visio impossible
-
-    Si Periodicite = 0 : créer une seule séance
-    Si Periodicite = 1 : créer plusieurs séances
-    Si Periodicite = 1 :
-        - Date de fin  ou Nombre de répétition obligatoire
-        - Répétition : entier obligatoire
-        - Unité : {Jour, Semaine} obligatoire
-        - Jours : {Lundi, Mardi, Mercredi, Jeudi, Vendredi, Samedi, Dimanche} obligatoire 1..n
-
-    Jour de fin max 1 an après la date de début + 14 jours
-        (pour les semaines avec le décalage jours/an , jours féries et anne bissextile etc)
-    */
-    // 1 créer un useState pour stocker les données
-
+import dayjs from "dayjs";
+import "dayjs/locale/fr";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+export default function Create({ Cours, Profs, Gcs }) {
     const [values, setValues] = React.useState({
         prof: "",
         cour: "",
@@ -71,11 +27,106 @@ export default function Create({ Cours, Profs }) {
         visio: "",
         periodicite: "",
         dateDeFin: "",
-        nombreDeRepetition: "",
-        repetition: "",
-        unite: "",
         jours: [],
     });
+
+    function isNumeric(n, type) {
+        if (type == "Semaine") {
+            //si c'est un entier entre 1 et 52
+            return !isNaN(parseFloat(n)) && isFinite(n) && n > 0 && n < 53;
+        } else if (type == "Jour") {
+            //si c'est un entier entre 1 et 365
+            return !isNaN(parseFloat(n)) && isFinite(n) && n > 0 && n < 366;
+        }
+        return false;
+    }
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        //vérifier les règles
+        // test si les champs obligatoires sont remplis
+        if (
+            values.prof == "" ||
+            values.cour == "" ||
+            values.dateDeDebut == "" ||
+            values.heureDeDebut == "" ||
+            values.heureDeFin == "" ||
+            values.mode == "" ||
+            values.groupeClass == ""
+        ) {
+            alert("Veuillez remplir les champs obligatoires");
+            return;
+        }
+        switch (values.mode) {
+            case "présentiel":
+                if (values.lieu == "") {
+                    alert("Veuillez remplir les champs obligatoires");
+                    return;
+                }
+                break;
+            case "comodal":
+                if (values.lieu == "" && values.visio == "") {
+                    alert("Veuillez remplir les champs obligatoires");
+                    return;
+                }
+                break;
+            case "distanciel":
+                if (values.visio == "") {
+                    alert("Veuillez remplir les champs obligatoires");
+                    return;
+                }
+                break;
+            default:
+                alert("Le mode n'est pas valide");
+        }
+        if (values.periodicite == "1") {
+            if (values.dateDeFin == "") {
+                alert("Veuillez remplir les champs obligatoires");
+                return;
+            }
+
+            if (values.jours.length == 0 || values.jours.length > 7) {
+                alert("Veuillez choisir entre 1 et 7 jours");
+                return;
+            }
+            if (values.dateDeFin != "") {
+                // convertir les dates en objet date pour pouvoir les comparer
+                const dateDeDebut = new Date(values.dateDeDebut);
+                const dateDeFin = new Date(values.dateDeFin);
+                // date de fin doit etre max 54 semaine plus tard
+                const dateMax = new Date(dateDeDebut);
+                dateMax.setDate(dateMax.getDate() + 54 * 7);
+                // comparer les dates
+                if (dateDeFin > dateMax) {
+                    alert("Votre date de fin est trop loin");
+                    return;
+                } else if (dateDeFin < dateDeDebut) {
+                    alert("Votre date de fin est avant la date de début");
+                    return;
+                }
+            }
+            const correctedDateDeFin = new Date(
+                values.dateDeFin
+            ).toLocaleString("fr-FR", {
+                timeZone: "Europe/Paris",
+            });
+            setValues((values) => ({
+                ...values,
+                dateDeFin: correctedDateDeFin,
+            }));
+        }
+        //post les données
+        //transformer dateDeDebut en timezone paris
+        const correctedDateDeDebut = new Date(
+            values.dateDeDebut
+        ).toLocaleString("fr-FR", {
+            timeZone: "Europe/Paris",
+        });
+        setValues((values) => ({
+            ...values,
+            dateDeDebut: correctedDateDeDebut,
+        }));
+        router.post("/seance", values);
+    };
 
     const handleChangeDateDeDebut = (newValue) => {
         setValues((values) => ({
@@ -91,12 +142,6 @@ export default function Create({ Cours, Profs }) {
             [name]: value,
         }));
         console.log(values);
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(values);
-        // to do
     };
 
     // trois fonctions pour gérer les changements de valeurs des selects (prof, cour, groupeClass)
@@ -136,10 +181,16 @@ export default function Create({ Cours, Profs }) {
 
     // fonction pour gérer le changement d'heure de début
     const handleChangeHeureDeDebut = (newValue) => {
-        //récuperer la valeur de l'heure et de la minute et les stocker dans un tableau [heure, minute]
-        // 1 get as string 2 split 3 get id 4 element
-        const nheureDeDebut = newValue.toString().split(" ")[4].split(":");
-        const newVal = [nheureDeDebut[0], nheureDeDebut[1]];
+        const corrected = new Date(newValue.toString()).toLocaleString(
+            "fr-FR",
+            {
+                timeZone: "Europe/Paris",
+            }
+        );
+        const newVal = [
+            corrected.split(" ")[1].split(":")[0],
+            corrected.split(" ")[1].split(":")[1],
+        ];
         setValues((values) => ({
             ...values,
             heureDeDebut: newVal,
@@ -148,10 +199,16 @@ export default function Create({ Cours, Profs }) {
 
     // fonction pour gérer le changement d'heure de fin
     const handleChangeHeureDeFin = (newValue) => {
-        //récuperer la valeur de l'heure et de la minute et les stocker dans un tableau [heure, minute]
-        // 1 get as string 2 split 3 get id 4 element
-        const nheureDeFin = newValue.toString().split(" ")[4].split(":");
-        const newVal = [nheureDeFin[0], nheureDeFin[1]];
+        const corrected = new Date(newValue.toString()).toLocaleString(
+            "fr-FR",
+            {
+                timeZone: "Europe/Paris",
+            }
+        );
+        const newVal = [
+            corrected.split(" ")[1].split(":")[0],
+            corrected.split(" ")[1].split(":")[1],
+        ];
         setValues((values) => ({
             ...values,
             heureDeFin: newVal,
@@ -191,14 +248,21 @@ export default function Create({ Cours, Profs }) {
         newCours.push({ value: cour.id, label: cour.nom });
     });
 
-    //const temporary group class list
-    const groupClass = [
-        { value: "L1", label: "L1" },
-        { value: "L2", label: "L2" },
-        { value: "L3", label: "L3" },
-        { value: "M1", label: "M1" },
-        { value: "M2", label: "M2" },
-    ];
+    //transformer les groupes en tableau de value label pour le select
+    const newGcs = [];
+    Gcs.map((gc) => {
+        newGcs.push({
+            value: gc.id,
+            label:
+                gc.numero_groupe +
+                "gp |" +
+                gc.nom_option +
+                " " +
+                gc.type_option +
+                " " +
+                gc.annee,
+        });
+    });
 
     //use state pour afficher cacher les champs de periodicite
     const [periodicite, setPeriodicite] = React.useState(false);
@@ -219,6 +283,8 @@ export default function Create({ Cours, Profs }) {
             setSemaineRepState(false);
         }
     };
+
+    dayjs.locale("fr");
 
     return (
         <SeanceLayout>
@@ -254,8 +320,11 @@ export default function Create({ Cours, Profs }) {
                                 <InputLabel value="Date de début" />
                                 <LocalizationProvider
                                     dateAdapter={AdapterDayjs}
+                                    adapterLocale={"fr"}
                                 >
                                     <DatePicker
+                                        defaultValue={dayjs()}
+                                        disablePast
                                         value={values.dateDeDebut}
                                         onChange={handleChangeDateDeDebut}
                                     />
@@ -266,9 +335,9 @@ export default function Create({ Cours, Profs }) {
                                     <InputLabel value="Heure de début" />
                                     <LocalizationProvider
                                         dateAdapter={AdapterDayjs}
+                                        adapterLocale={"fr"}
                                     >
                                         <TimePicker
-                                            value={values.heureDeDebut}
                                             onChange={handleChangeHeureDeDebut}
                                             ampm={false}
                                         />
@@ -278,9 +347,9 @@ export default function Create({ Cours, Profs }) {
                                     <InputLabel value="Heure de fin" />
                                     <LocalizationProvider
                                         dateAdapter={AdapterDayjs}
+                                        adapterLocale={"fr"}
                                     >
                                         <TimePicker
-                                            value={values.heureDeFin}
                                             onChange={handleChangeHeureDeFin}
                                             ampm={false}
                                         />
@@ -296,12 +365,12 @@ export default function Create({ Cours, Profs }) {
                                     id="mode"
                                     options={[
                                         {
-                                            value: "Presentiel",
+                                            value: "présentiel",
                                             label: "Présentiel",
                                         },
-                                        { value: "Comodal", label: "Comodal" },
+                                        { value: "comodal", label: "Comodal" },
                                         {
-                                            value: "Distanciel",
+                                            value: "distanciel",
                                             label: "Distanciel",
                                         },
                                     ]}
@@ -313,7 +382,7 @@ export default function Create({ Cours, Profs }) {
                                 <Select
                                     name="groupeClass"
                                     id="groupeClass"
-                                    options={groupClass}
+                                    options={newGcs}
                                     onChange={handleChangeGroupeClass}
                                 />
                             </div>
@@ -354,9 +423,12 @@ export default function Create({ Cours, Profs }) {
                                         <InputLabel value="Date de fin" />
                                         <LocalizationProvider
                                             dateAdapter={AdapterDayjs}
+                                            adapterLocale={"fr"}
                                         >
                                             <DatePicker
                                                 value={values.dateDeFin}
+                                                disablePast
+                                                maxDate={dayjs().add(2, "year")}
                                                 onChange={(newValue) => {
                                                     setValues((values) => ({
                                                         ...values,
@@ -368,61 +440,20 @@ export default function Create({ Cours, Profs }) {
                                         </LocalizationProvider>
                                     </div>
                                     <div className="w-1/2 flex flex-col space-y-2">
-                                        <InputLabel value="Nombre de répétition" />
-                                        <TextInput
-                                            placeholder="Nombre de répétition"
-                                            value={values.nombreDeRepetition}
+                                        <InputLabel value="Jours" />
+                                        <Select
+                                            name="jours"
+                                            id="jours"
+                                            options={jours}
+                                            isMulti
                                             onChange={(e) =>
-                                                setValues((values) => ({
-                                                    ...values,
-                                                    nombreDeRepetition:
-                                                        e.target.value,
-                                                }))
+                                                handleChangeJours(e)
                                             }
                                         />
                                     </div>
                                 </div>
 
-                                <div className="flex flex w-full space-x-4">
-                                    <div className="w-1/2 flex flex-col space-y-2">
-                                        <InputLabel value="Répétition" />
-                                        <Select
-                                            name="repetition"
-                                            id="repetition"
-                                            defaultValue={{
-                                                value: "Jour",
-                                                label: "Jour",
-                                            }}
-                                            options={[
-                                                {
-                                                    value: "Jour",
-                                                    label: "Jour",
-                                                },
-                                                {
-                                                    value: "Semaine",
-                                                    label: "Semaine",
-                                                },
-                                            ]}
-                                            onChange={handleChangeRep}
-                                        />
-                                    </div>
-                                    {semaineRepState ? (
-                                        <>
-                                            <div className="w-1/2 flex flex-col space-y-2">
-                                                <InputLabel value="Jours" />
-                                                <Select
-                                                    name="jours"
-                                                    id="jours"
-                                                    options={jours}
-                                                    isMulti
-                                                    onChange={(e) =>
-                                                        handleChangeJours(e)
-                                                    }
-                                                />
-                                            </div>
-                                        </>
-                                    ) : null}
-                                </div>
+                                <div className="flex flex w-full space-x-4"></div>
                             </>
                         ) : null}
                         <div className="flex flex w-full space-x-4">

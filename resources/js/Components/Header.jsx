@@ -62,6 +62,12 @@ export default function Header(props) {
                                 <Link href="/profs">professeurs</Link>
                             </div>
                             <div className="w-36 h-8 flex items-center justify-center bg-white rounded-full text-primRed">
+                                <Link href="/options">options</Link>
+                            </div>
+                            <div className="w-36 h-8 flex items-center justify-center bg-white rounded-full text-primRed">
+                                <Link href="/gcs">groupes classes</Link>
+                            </div>
+                            <div className="w-36 h-8 flex items-center justify-center bg-white rounded-full text-primRed">
                                 <Link href="/cours">cours</Link>
                             </div>
                             <div className="w-36 h-8 flex items-center justify-center bg-white rounded-full text-primRed">
