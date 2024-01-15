@@ -11,7 +11,12 @@ use Inertia\Inertia;
 
 class InscriptionsController extends Controller
 {
-    //store inscriptions
+    /**
+     * Méthode pour créer une inscription à un cours pour un utilisateur danbs la base de données
+     *
+     * @param Request $request
+     * @return Response
+     */
     public function store(Request $request)
     {
         try {
@@ -34,7 +39,12 @@ class InscriptionsController extends Controller
         }
     }
 
-    //delete inscriptions
+    /**
+     * Méthode pour supprimer une inscription à un cours pour un utilisateur dans la base de données
+     *
+     * @param Request $request
+     * @return Response
+     */
     public function destroy(Request $request)
     {
         try {
@@ -52,7 +62,12 @@ class InscriptionsController extends Controller
         }
     }
 
-    //accesseur public pour un utilisateur donné doit retourner les cours auxquels il est inscrit
+    /**
+     * Accesseur public pour récupérer les inscriptions d'un utilisateur
+     *
+     * @param int $user_id
+     * @return Response
+     */
     public static function getInscriptions($user_id)
     {
         try {

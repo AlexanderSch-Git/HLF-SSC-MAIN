@@ -12,18 +12,19 @@ use Inertia\Response;
 
 class CoursController extends Controller
 {
-    //index method pour les cours , donne la liste des cours
+    /**
+     * Affiche la page d'index ( la liste) des cours
+     *
+     * @return Response
+     */
     public function index()
     {
         try {
             Log::info('CoursController.index: ');
-            // select cours.* prof.nom1 prof.prenom1 from cours join profs on cours.prof_id = profs.id puis jointure sur humains
             $cours = Cours::join('profs', 'cours.prof_id', '=', 'profs.id')
                 ->join('humains', 'profs.humain_id', '=', 'humains.id')
                 ->select('cours.*', 'humains.nom1', 'humains.prenom1', 'humains.id as pid')
                 ->get();
-            // créer un array de cours avec chaque cours ayant pour attributs :
-            // id , nom , ue , prof ( = nom1 + " " + prenom1);
             $coursArray = [];
             foreach ($cours as $c) {
                 $coursArray[] = [
@@ -41,7 +42,12 @@ class CoursController extends Controller
         }
     }
 
-    //show method pour un cours , donne les détails d'un cours
+    /**
+     * Affiche la page d'un cours
+     *
+     * @param int $id
+     * @return Response
+     */
     public function show($id)
     {
         try {
@@ -59,16 +65,16 @@ class CoursController extends Controller
         }
     }
 
-    //create method pour un cours , donne le formulaire de création d'un cours
+    /**
+     * Affiche la page de création d'un cours
+     *
+     * @return Response
+     */
     public function create()
     {
         try {
             Log::info('CoursController.create: ');
-            //get profs
             $profs = ProfController::getProfs();
-
-            //créer un tableau [label => nom1 + " " + prenom1 , value => id]
-            //exemple const options = [{ value: '1', label: 'Dupont Claude' }, { value: '2', label: 'Dupont Claude' }];
             $profsArray = [];
             foreach ($profs as $p) {
                 $profsArray[] = [
@@ -86,7 +92,11 @@ class CoursController extends Controller
         }
     }
 
-    //store method pour un cours , crée un cours
+    /**
+     * Methode de création d'un cours
+     * @param Request $request // Récupère la requête émise par le formulaire
+     * @return Response
+     */
     public function store(Request $request)
     {
         try {
@@ -96,7 +106,6 @@ class CoursController extends Controller
                 'ue' => 'required|string|max:255',
                 'prof' => 'required|integer',
             ]);
-            //créer un cours
             $cours =
                 [
                     'nom_user' => $request->nom,
@@ -104,7 +113,6 @@ class CoursController extends Controller
                     'prof_id' => $request->prof
                 ];
             $coursnew = Cours::create($cours);
-            //rediriger vers la page show avec id
             return $this->show($coursnew->id);
         } catch (ModelNotFoundException $e) {
             Log::error('CoursController.store: une erreur est survenue lors de la création d\'un cours');
@@ -113,7 +121,10 @@ class CoursController extends Controller
         }
     }
 
-    //showSearch method pour un cours , donne le formulaire de recherche d'un cours
+    /**
+     * Affiche la page de recherche d'un cours
+     * @return Response
+     */
     public function showSearch()
     {
         try {
@@ -124,7 +135,11 @@ class CoursController extends Controller
         }
     }
 
-    //searchByName method pour un cours , donne les résultats de la recherche d'un cours par nom
+    /**
+     * Methode de recherche d'un cours par nom
+     * @param Request $request // Récupère la requête émise par le formulaire
+     * @return Response
+     */
     public function searchByName(Request $request)
     {
         try {
@@ -134,16 +149,6 @@ class CoursController extends Controller
             ]);
             $cours = Cours::where('nom_user', 'like', '%' . $request->nom . '%')->get();
             $coursArray = [];
-            /*
-            exemple de cours {
-                "id":1,
-                "nom_user":"Test",
-                "nom_ue":"UE TEST",
-                "prof_id":1,"
-                created_at":"2024-01-04T01:49:02.000000Z",
-                "updated_at":"2024-01-04T01:49:02.000000Z"}
-            */
-            // il nous faut id,nom , ue , prof
             foreach ($cours as $c) {
                 $coursArray[] = [
                     'id' => $c->id,
@@ -152,7 +157,6 @@ class CoursController extends Controller
                     'prof' => $c->prof_id
                 ];
             }
-            //render search result avec les cours trouvés
             return Inertia::render('Cour/SearchResult', [
                 'cours' => $coursArray
             ]);
@@ -161,18 +165,18 @@ class CoursController extends Controller
         }
     }
 
-    // external public method pour avoir la liste des cours
+    /**
+     * Accesseur de la liste des cours public
+     * @return array ['id', 'nom', 'ue', 'prof', 'pid']
+     */
     public static function getCours()
     {
         try {
             Log::info('CoursController.getCours: ');
-            // select cours.* prof.nom1 prof.prenom1 from cours join profs on cours.prof_id = profs.id puis jointure sur humains
             $cours = Cours::join('profs', 'cours.prof_id', '=', 'profs.id')
                 ->join('humains', 'profs.humain_id', '=', 'humains.id')
                 ->select('cours.*', 'humains.nom1', 'humains.prenom1', 'humains.id as pid')
                 ->get();
-            // créer un array de cours avec chaque cours ayant pour attributs :
-            // id , nom , ue , prof ( = nom1 + " " + prenom1)
             $coursArray = [];
             foreach ($cours as $c) {
                 $coursArray[] = [

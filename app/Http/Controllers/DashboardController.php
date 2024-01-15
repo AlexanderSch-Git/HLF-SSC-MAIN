@@ -12,37 +12,41 @@ use function PHPSTORM_META\map;
 
 class DashboardController extends Controller
 {
-    //index render la pge dashboard
+    /**
+     * Affiche la page d'index ( la liste) des cours
+     *
+     * @return Response
+     */
     public function index()
     {
+        //1 - Récupérer les données nécessaires
         $seances = Seance::all();
-
         $cours = CoursController::getCours();
-
         $inscriptions = InscriptionsController::getInscriptions(auth()->user()->id);
 
-        //creer un dict de seances
+        //2 - Créer un dictionnaire afin d'éviter de devoir constamment chercher dans les tableaux
         $seancesDict = [];
         foreach ($seances as $seance) {
             $seancesDict[$seance['id']] = $seance;
         }
-
-        //creer un dict de cours
         $coursDict = [];
         foreach ($cours as $cour) {
             $coursDict[$cour['id']] = $cour;
         }
-
+        /*
+            Amélioration nécessaire :
+            -> suppression de la double boucle ,
+        */
         $mesCours = [];
         foreach ($inscriptions as $inscription) {
             array_push($mesCours, $coursDict[$inscription->cours_id]);
         }
-
         $mesCoursDict = [];
         foreach ($mesCours as $cour) {
             $mesCoursDict[$cour['id']] = $cour;
         }
-        //create array of events
+
+        //3 - Transformer les données en format compatible avec le calendrier fullcalendar
         $events = [];
         foreach ($seances as $seance) {
             // si l'id du cours de la seance est dans le tableau des cours de l'utilisateur
@@ -70,6 +74,7 @@ class DashboardController extends Controller
             }
         }
 
+        //4 - Renvoyer la vue
         return Inertia::render('Dashboard', [
             'auth', auth()->user(),
             'events' => $events,

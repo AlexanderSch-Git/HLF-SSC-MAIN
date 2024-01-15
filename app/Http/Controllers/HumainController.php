@@ -12,10 +12,13 @@ use Inertia\Response;
 
 class HumainController extends Controller
 {
-    // Afficher la liste des humains
+    /*
+    * Afficher la page d'index ( la liste) des humains
+    *
+    * @return Response
+    */
     public function index()
     {
-        //render la page index avec la liste des humains
         try {
             $humains = Humain::all();
             return Inertia::render('Humain/Index', ['humains' => $humains]);
@@ -24,7 +27,13 @@ class HumainController extends Controller
             return Inertia::render('Error', ['message' => 'aucun humain trouvé.']);
         }
     }
-    // Afficher juste un humain grace a son id
+
+    /**
+     * Afficher la page d'un humain
+     *
+     * @param int $id
+     * @return Response
+     */
     public function show($id)
     {
         try {
@@ -36,7 +45,11 @@ class HumainController extends Controller
         }
     }
 
-    // Afficher la page pour créer un humain
+    /**
+     * Afficher la page de creation d'un humain
+     *
+     * @return Response
+     */
     public function create()
     {
         try {
@@ -47,15 +60,17 @@ class HumainController extends Controller
             return Inertia::render('Error', ['message' => 'Humain not found.']);
         }
     }
-    // Créer un nouvel humain
+
+
+    /**
+     * Methode pour créer un humain
+     *
+     * @param Request $request
+     */
     public function store(Request $request)
     {
-        ///log for laravale
         Log::info('HumainController@store');
-        //log la request
-        Log::info($request);
-
-        //validation
+        //validation et vérification des règles
         try {
             $validatedData = $request->validate([
                 'nom1' => 'required|alpha',
@@ -71,7 +86,6 @@ class HumainController extends Controller
         } catch (\Throwable $th) {
             Log::info($th);
         }
-        //if nom2 or nom 3 or prenom2 or prenom3 is null, set it to ''
         if ($validatedData['nom2'] == null) {
             $validatedData['nom2'] = '';
         }
@@ -97,7 +111,12 @@ class HumainController extends Controller
         return $this->show($humain->id);
     }
 
-    // Rechercher un humain par son nom parmis les 3
+    /**
+     * Effectue la recherche d'un humain par son nom
+     *
+     * @param Request $request : les données du formulaire
+     * @return Response
+     */
     public function searchByName(Request $request)
     {
         try {
@@ -121,7 +140,12 @@ class HumainController extends Controller
         }
     }
 
-    // Rechercher un humain par son prenom parmis les 3
+    /**
+     * Effectue la recherche d'un humain par son prénom
+     *
+     * @param Request $request : les données du formulaire
+     * @return Response
+     */
     public function searchByFirstName(Request $request)
     {
         $searchFirstName = $request->input('searchFirstName');
@@ -133,7 +157,12 @@ class HumainController extends Controller
         return Inertia::render('Humain/SearchResults', ['humains' => $humains]);
     }
 
-    // Rechercher un humain par son email
+    /**
+     * Effectue la recherche d'un humain par son email
+     *
+     * @param Request $request : les données du formulaire
+     * @return Response
+     */
     public function searchByEmail(Request $request)
     {
         $searchEmail = $request->input('searchEmail');
@@ -143,7 +172,12 @@ class HumainController extends Controller
         return Inertia::render('Humain/SearchResults', ['humains' => $humains]);
     }
 
-    // Rechercher un humain par son telephone
+    /**
+     * Effectue la recherche d'un humain par son téléphone
+     *
+     * @param Request $request : les données du formulaire
+     * @return Response
+     */
     public function searchByPhone(Request $request)
     {
         $searchPhone = $request->input('searchPhone');
@@ -153,7 +187,12 @@ class HumainController extends Controller
         return Inertia::render('Humain/SearchResults', ['humains' => $humains]);
     }
 
-    // Modifier un humain grace a son id
+    /**
+     * Methode pour modifier un humain dans la base de données
+     *
+     * @param int $id
+     * @return Response
+     */
     public function update(Request $request, $id)
     {
         try {
@@ -198,7 +237,12 @@ class HumainController extends Controller
         return $this->show($humain->id);
     }
 
-    //supprimer un humain
+    /**
+     * Methode pour supprimer un humain dans la base de données
+     *
+     * @param int $id
+     * @return Response
+     */
     public function destroy($id)
     {
         try {
@@ -213,7 +257,11 @@ class HumainController extends Controller
         }
     }
 
-    // Afficher la page pour chercher un humain
+    /**
+     * Affiche la page de recherche d'un humain
+     *
+     * @return Response
+     */
     public function showSearch()
     {
         try {

@@ -13,7 +13,11 @@ use function Laravel\Prompts\search;
 
 class SeanceController extends Controller
 {
-    //affiche la liste des seances
+    /**
+     * Affiche la page d'index ( la liste) des séances
+     *
+     * @return Response
+     */
     public function index()
     {
         //get toutes les séance jointure sur cours et prof
@@ -34,7 +38,11 @@ class SeanceController extends Controller
         }
     }
 
-    //affiche la page pour créer une séance
+    /**
+     * Affiche la page pour créer une séance
+     *
+     * @return Response
+     */
     public function create()
     {
         try {
@@ -58,6 +66,11 @@ class SeanceController extends Controller
         }
     }
 
+    /**
+     * Methode utilitaire pour créer une séance dans la base de données
+     *
+     * @param array $seance keys : [prof_id, cours_id, mode, date, heure_debut, heure_fin, groupe_classe_id]
+     */
     private function internStore($seance)
     {
         //log for laravale
@@ -69,8 +82,13 @@ class SeanceController extends Controller
         //on redirige vers la page index
         return redirect()->route('seances.index');
     }
-    //créer une nouvelle séance
-    //  definition de seance : protected $fillable = ['prof_id', 'cours_id', 'mode', 'date', 'heure_debut', 'heure_fin', 'groupe_classe_id'];
+
+    /**
+     * Méthode pour créer une séance dans la base de données
+     *
+     * @param Request $request
+     * @return Response
+     */
     public function store(Request $request)
     {
         ///log for laravale

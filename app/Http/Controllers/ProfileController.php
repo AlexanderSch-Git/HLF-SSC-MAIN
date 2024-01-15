@@ -11,6 +11,19 @@ use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
 
+
+/**
+ * Ce controlleur est défini par breeze dans son systeme d'authentification clef en main
+ * Le profil utilisateur n'est pas actuellement implémenté car l'état du projet est : ALPHA - Proof of concept
+ * De ce fait chaque utilisateur est considéré comme un admin et peut donc modifier les données de l'application à sa guise
+ * - il est donc à la fois étudiant, professeur, et administratif(PA)
+ *
+ * //NOTE A MOI MEME :
+ * Ne pas implémenter les gestions des autorisations et des rôles car futur implémentations de Microsoft Graph API pour gérer les rôles et les autorisations
+ * https://learn.microsoft.com/en-us/azure/active-directory-b2c/enable-authentication-react-spa-app-options?tabs=popup
+ *
+ * Il faudra refaire le système d'authentification avec Microsoft Graph API ou Azure AD B2C
+ */
 class ProfileController extends Controller
 {
     /**

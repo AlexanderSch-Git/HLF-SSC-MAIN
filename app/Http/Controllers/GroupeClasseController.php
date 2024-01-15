@@ -12,7 +12,11 @@ use PHPUnit\Framework\Attributes\Group;
 
 class GroupeClasseController extends Controller
 {
-    //afficher la liste des groupes de classe
+    /**
+     * Affiche la page d'index ( la liste) des groupes de classe
+     *
+     * @return Response
+     */
     public function index()
     {
         try {
@@ -29,7 +33,12 @@ class GroupeClasseController extends Controller
         }
     }
 
-    //afficher un groupe de classe
+    /**
+     * Affiche la page d'un groupe de classe
+     *
+     * @param int $id
+     * @return Response
+     */
     public function show($id)
     {
         try {
@@ -43,7 +52,11 @@ class GroupeClasseController extends Controller
         }
     }
 
-    //afficher le formulaire de création d'un groupe de classe
+    /**
+     * Affiche la page de creation d'un groupe de classe
+     *
+     * @return Response
+     */
     public function create()
     {
         try {
@@ -56,7 +69,12 @@ class GroupeClasseController extends Controller
         }
     }
 
-    //enregistrer un groupe de classe
+    /**
+     * Methode pour créer un groupe de classe dans la base de données
+     *
+     * @param Request $request : les données du formulaire
+     * @return Response
+     */
     public function store(Request $request)
     {
         Log::info('GroupeClasseController@store');
@@ -75,7 +93,10 @@ class GroupeClasseController extends Controller
         }
     }
 
-    //accesseur pour les options
+    /**
+     * Accesseur public pour la liste des groupes de classe
+     * @return array [GroupeClasse]
+     */
     public static function getGroupeClasses()
     {
         try {

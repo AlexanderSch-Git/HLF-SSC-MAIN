@@ -11,7 +11,12 @@ use Inertia\Response;
 
 class OptionController extends Controller
 {
-    //afficher une option
+    /**
+     * Afficher la page d'une option
+     *
+     * @param int $id
+     * @return Response
+     */
     public function show($id)
     {
         try {
@@ -22,7 +27,12 @@ class OptionController extends Controller
             return Inertia::render('Error', ['message' => 'Option not found.']);
         }
     }
-    //afficher la liste des options
+
+    /**
+     * Affiche la page d'index ( la liste) des options
+     *
+     * @return Response
+     */
     public function index()
     {
         try {
@@ -35,7 +45,11 @@ class OptionController extends Controller
         }
     }
 
-    //afficher le formulaire de création d'une option
+    /**
+     * Afficher la page de creation d'une option
+     *
+     * @return Response
+     */
     public function create()
     {
         try {
@@ -47,7 +61,12 @@ class OptionController extends Controller
         }
     }
 
-    //enregistrer une option
+    /**
+     * Méthode pour créer une option dans la base de données
+     *
+     * @param Request $request : les données du formulaire de création
+     * @return Response
+     */
     public function store(Request $request)
     {
         try {
@@ -68,8 +87,11 @@ class OptionController extends Controller
         }
     }
 
-
-    //accesseur public pour la liste des options
+    /**
+     * Accesseur public pour récupérer les options
+     *
+     * @return Response
+     */
     public static function getOptions()
     {
         try {

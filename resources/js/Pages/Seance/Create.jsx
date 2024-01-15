@@ -56,28 +56,6 @@ export default function Create({ Cours, Profs, Gcs }) {
             alert("Veuillez remplir les champs obligatoires");
             return;
         }
-        switch (values.mode) {
-            case "présentiel":
-                if (values.lieu == "") {
-                    alert("Veuillez remplir les champs obligatoires");
-                    return;
-                }
-                break;
-            case "comodal":
-                if (values.lieu == "" && values.visio == "") {
-                    alert("Veuillez remplir les champs obligatoires");
-                    return;
-                }
-                break;
-            case "distanciel":
-                if (values.visio == "") {
-                    alert("Veuillez remplir les champs obligatoires");
-                    return;
-                }
-                break;
-            default:
-                alert("Le mode n'est pas valide");
-        }
         if (values.periodicite == "1") {
             if (values.dateDeFin == "") {
                 alert("Veuillez remplir les champs obligatoires");

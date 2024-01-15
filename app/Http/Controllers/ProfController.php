@@ -9,11 +9,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
-//Faites comme humain controller
-//N'oubliez pas qu'un prof contient un humain + un trigrame
 class ProfController extends Controller
 {
-    //Afficher la liste des profs
+    /**
+     * Affiche la page d'index ( la liste) des profs
+     *
+     * @return Response
+     */
     public function index()
     {
         //render la page index avec la liste des profs
@@ -28,7 +30,13 @@ class ProfController extends Controller
             return Inertia::render('Error', ['message' => 'aucun prof trouvé.']);
         }
     }
-    //Afficher juste un prof grace a son id
+
+    /**
+     * Affiche la page d'un prof
+     *
+     * @param int $id
+     * @return Response
+     */
     public function show($id)
     {
         try {
@@ -42,8 +50,13 @@ class ProfController extends Controller
             return Inertia::render('Error', ['message' => 'Prof not found.']);
         }
     }
-    //Afficher la page pour créer un prof
-    //Créer un nouveau prof prend un humain ( le trigrame est généré automatiquement)
+
+    /**
+     * Méthode pour créer un prof dans la base de données
+     *
+     * @param Request $request
+     * @return Response
+     */
     public function store(Request $request)
     {
         try {
@@ -63,45 +76,35 @@ class ProfController extends Controller
             return Inertia::render('Error', ['message' => 'Prof not found.']);
         }
     }
-    //Chercher un prof par son nom
+
+    /**
+     * Méthode pour chercher un prof par son nom
+     *
+     * @param Request $request
+     * @return Response
+     */
     public function searchByName(Request $request)
     {
         Log::info('ProfController@searchByName');
         try {
-
-            //select prof id as profid from profs where humain_id in
             $profs = Prof::join('humains', 'profs.humain_id', '=', 'humains.id')
                 ->select('profs.id as pid', 'humains.*')
                 ->where('humains.nom1', 'like', '%' . $request->nom . '%')
                 ->orWhere('humains.nom2', 'like', '%' . $request->nom . '%')
                 ->get();
             Log::info($profs);
-
-            //render prof searchresults
             return Inertia::render('Prof/SearchResults', ['profs' => $profs]);
         } catch (ModelNotFoundException $e) {
             Log::error($e);
             return Inertia::render('Error', ['message' => 'Prof not found.']);
         }
     }
-    //Chercher un prof par son prénom
-    //Chercher un prof oar sib email
-    //Chercher un prof par son numéro de téléphone
-    //Modifier un prof
-    //Supprimer un prof
-    public function destroy(Request $request)
-    {
-        try {
-            Log::info('ProfController@destroy');
-            Log::info($request);
 
-            return redirect()->route('profs.index');
-        } catch (ModelNotFoundException $e) {
-            Log::error($e);
-            return Inertia::render('Error', ['message' => 'Prof not found.']);
-        }
-    }
-    //Afficher la page pour chercher un prof
+    /**
+     * Afficher la page pour chercher un prof
+     *
+     * @return Response
+     */
     public function showSearch()
     {
         try {
@@ -113,7 +116,11 @@ class ProfController extends Controller
         }
     }
 
-    //accesseur public pour les profs
+    /**
+     * Accesseur public pour récupérer les profs
+     *
+     * @return Response
+     */
     public static function getProfs()
     {
         try {
