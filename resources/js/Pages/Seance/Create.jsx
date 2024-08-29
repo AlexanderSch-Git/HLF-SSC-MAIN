@@ -155,6 +155,38 @@ export default function Create({ Cours, Profs, Gcs }) {
             ...values,
             jours: newJours,
         }));
+        /*/ calculer le nombre de répétition en fonction des jours sélectionnés et de date de fin et de début
+        // 1 vérifier si date de fin de début et les jours sont remplis
+        if (
+            values.dateDeDebut == "" ||
+            values.dateDeFin == "" ||
+            values.jours == []
+        ) {
+            return;
+        }
+        // 2 convertir les dates en objet date pour pouvoir les comparer
+        const dateDeDebut = new Date(values.dateDeDebut);
+        const dateDeFin = new Date(values.dateDeFin);
+        // 3 calculer le nombre de répétition de la séance (càd le nombre de jours qui sont dans la listre jours entre date de début et date de fin)
+        let count = 0;
+        for (let i = dateDeDebut; i <= dateDeFin; i.setDate(i.getDate() + 1)) {
+            let getDayName = i.toLocaleDateString("fr-FR", {
+                weekday: "long",
+            });
+            //passer 1 char en majuscule pour matcher les jours
+            getDayName =
+                getDayName.charAt(0).toUpperCase() + getDayName.slice(1);
+            if (values.jours.includes(getDayName)) {
+                console.log(getDayName);
+                count++;
+            }
+        }
+        // 4 stocker le nombre de répétition
+        setValues((values) => ({
+            ...values,
+            nombreDeRepetition: count,
+        }));
+        console.log(values.nombreDeRepetition);*/
     };
 
     // fonction pour gérer le changement d'heure de début
@@ -187,6 +219,7 @@ export default function Create({ Cours, Profs, Gcs }) {
             corrected.split(" ")[1].split(":")[0],
             corrected.split(" ")[1].split(":")[1],
         ];
+
         setValues((values) => ({
             ...values,
             heureDeFin: newVal,
@@ -482,11 +515,11 @@ export default function Create({ Cours, Profs, Gcs }) {
                                 {periodicite
                                     ? "La séance sera répétée" +
                                       " " +
-                                      values.nombreDeRepetition +
-                                      " " +
-                                      values.unite +
-                                      " " +
-                                      "à partir du" +
+                                      /*
+                                    values.nombreDeRepetition +
+                                    " " +
+                                    "fois,"+*/ " " +
+                                      " à partir du" +
                                       " " +
                                       values.dateDeDebut +
                                       " " +
@@ -496,7 +529,15 @@ export default function Create({ Cours, Profs, Gcs }) {
                                       " " +
                                       "les" +
                                       " " +
-                                      values.jours
+                                      values.jours +
+                                      " " +
+                                      "entre" +
+                                      " " +
+                                      values.heureDeDebut +
+                                      " " +
+                                      "et" +
+                                      " " +
+                                      values.heureDeFin
                                     : "La séance sera unique le" +
                                       " " +
                                       values.dateDeDebut +

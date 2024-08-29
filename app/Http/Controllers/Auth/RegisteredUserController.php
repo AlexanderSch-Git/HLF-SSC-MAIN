@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
+use Spatie\Permission\Models\Role;
 
 class RegisteredUserController extends Controller
 {
@@ -33,7 +34,7 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:'.User::class,
+            'email' => 'required|string|email|max:255|unique:' . User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
@@ -44,6 +45,14 @@ class RegisteredUserController extends Controller
         ]);
 
         event(new Registered($user));
+
+        // Assign the default role of 'Etudiant' to the user
+        //1 vérifier si le rôle existe
+        $role = Role::where('name', 'Etudiant')->first();
+        //2 assigner le rôle à l'utilisateur
+        if ($role) {
+            $user->assignRole($role);
+        };
 
         Auth::login($user);
 
