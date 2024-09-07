@@ -39,8 +39,16 @@ const Index = ({ humains }) => {
                     <tbody>
                         {Nhumains.map((humain) => (
                             <tr key={humain.id}>
-                                <td className="border">{humain.noms}</td>
-                                <td className="border">{humain.prenoms}</td>
+                                <td className="border hover:text-purple-300">
+                                    <Link href={"/humain/" + humain.id}>
+                                        {humain.noms}
+                                    </Link>
+                                </td>
+                                <td className="border hover:text-purple-300">
+                                    <Link href={"/humain/" + humain.id}>
+                                        {humain.prenoms}
+                                    </Link>
+                                </td>
                                 <td className="border">
                                     {humain.date_de_naissance}
                                 </td>

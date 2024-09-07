@@ -6,7 +6,7 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 export default function OptionLayout({ children }) {
     return (
-        <AdminLayout>
+        <AdminLayout titre="options">
             <div className="flex flex-row align-middle items-center text-center w-full">
                 <button className="bg-primBlue hover:bg-primRed text-white font-bold py-2 px-4 rounded">
                     <Link href="/options">Liste</Link>

@@ -23,13 +23,16 @@ class HasPermission
         // Vérifier si l'utilisateur est authentifié
         Log::info("HasPermission");
         Log::info($routeName);
-
+        //check if user has super admin role
+        if ($request->user()->hasRole('Super-Admin')) {
+            return $next($request);
+        };
 
         // Vérifier si l'utilisateur a la permission associée à cette route
         if ($routeName && !$request->user()->can($routeName)) {
             // Optionnel : Afficher une erreur si l'utilisateur n'a pas la permission
             throw UnauthorizedException::forPermissions([$routeName]);
-        }
+        };
 
         return $next($request);
     }

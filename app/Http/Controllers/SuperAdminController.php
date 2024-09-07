@@ -96,4 +96,34 @@ class SuperAdminController extends Controller
         //return index function
         return redirect()->route('superadmin.index');
     }
+
+    //edit permissions of a role
+    public function editPermissionsOfRole(Request $request)
+    {
+        Log::info("SuperAdminController@editPermissionsOfRole");
+        //Log::info($request);
+        $role = Role::findByName($request->data['role']);
+        $permissions = $request->data['permissions'];
+        // log what permissions are being added to what role
+        Log::info('SuperAdminController@editPermissionsOfRole: ' . $role->name . 'with');
+        Log::info($permissions);
+        //log the curent permissions of the role
+        Log::info('SuperAdminController@editPermissionsOfRole: ' . $role->getPermissionNames());
+        $role->syncPermissions($permissions);
+        //if the permissions were added log it
+        $rolePermState = $role->getPermissionNames();
+        //transform the collection to an array
+        $rolePermState = $rolePermState->toArray();
+        // if rolePermState is equal to permissions then the permissions were added
+        $dif = array_diff($permissions, $rolePermState);
+        Log::info("dif");
+        Log::info($dif);
+        if (empty($dif)) {
+            Log::info('SuperAdminController@editPermissionsOfRole: permissions concord for' . $role->name);
+        } else {
+            Log::error('SuperAdminController@editPermissionsOfRole: permissions discords for' . $role->name);
+            return Inertia::render('Error', ['message' => 'Permissions not added to role.']);
+        }
+        return redirect()->route('superadmin.index');
+    }
 }

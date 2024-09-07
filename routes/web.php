@@ -64,6 +64,7 @@ Route::post('prof/promote', [ProfController::class, 'store'])->middleware(['auth
 Route::get('prof/search', [ProfController::class, 'showSearch'])->middleware(['auth', 'verified', 'permission',])->name('prof.search');
 Route::get('prof/searchbyname', [ProfController::class, 'searchByName'])->middleware(['auth', 'verified', 'permission',])->name('prof.searchbyname');
 Route::post('prof/demote', [ProfController::class, 'destroy'])->middleware(['auth', 'verified', 'permission',])->name('prof.demote');
+Route::get('prof/create', [HumainController::class, 'showSearch'])->middleware(['auth', 'verified', 'permission',])->name('prof.create');
 
 Route::get('prof/{id}', [ProfController::class, 'show'])->middleware(['auth', 'verified', 'permission',])->name('prof.show');
 
@@ -104,4 +105,5 @@ Route::post('/desinscription', [InscriptionsController::class, 'destroy'])->midd
 Route::get('/superadmin', [SuperAdminController::class, 'index'])->middleware(['auth', 'verified'])->name('superadmin.index');
 Route::post('/superadmin/addRoleToUser', [SuperAdminController::class, 'addRoleToUser'])->middleware(['auth', 'verified'])->name('superadmin.addRoleToUser');
 Route::post('/superadmin/removeRoleFromUser', [SuperAdminController::class, 'removeRoleFromUser'])->middleware(['auth', 'verified'])->name('superadmin.removeRoleFromUser');
+Route::post('/superadmin/editPermissionsOfRole', [SuperAdminController::class, 'editPermissionsOfRole'])->middleware(['auth', 'verified'])->name('superadmin.editPermissionsOfRole');
 require __DIR__ . '/auth.php';

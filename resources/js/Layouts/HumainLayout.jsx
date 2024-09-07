@@ -9,8 +9,8 @@ import AdminLayout from "./AdminLayout";
 
 export default function HumainLayout({ children }) {
     return (
-        <AdminLayout>
-            <div className="flex flex-row align-middle items-center text-center justify-end w-full">
+        <AdminLayout titre="humains">
+            <div className="flex flex-row align-middle items-center text-center justify-start w-full">
                 <button className="bg-primBlue hover:bg-primRed text-white font-bold py-2 px-4 rounded">
                     <Link href="/humains">Liste</Link>
                 </button>

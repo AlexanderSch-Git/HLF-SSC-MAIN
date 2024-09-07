@@ -69,9 +69,14 @@ export default function Manager(props) {
                     <div className="h-32 w-full items-center justify-center pl-8 pt-4">
                         <ApplicationLogo />
                     </div>
-                    <div className="h-full pl-8">
+                    <div className="h-full px-8 flex flex-col space-y-4 pt-8">
                         <div
-                            className="w-full hover:text-adminAquaBlue"
+                            //classname = wfull if current view underline blue and text blue else text white , text bold 2xl
+                            className={
+                                currentView === "General"
+                                    ? "w-full text-adminAquaBlue border-b-2 border-b-adminAquaBlue font-bold text-2xl"
+                                    : "w-full text-white font-bold text-2xl"
+                            }
                             onClick={() => {
                                 setCurrentView("General");
                             }}
@@ -79,7 +84,12 @@ export default function Manager(props) {
                             General
                         </div>
                         <div
-                            className="w-full hover:text-adminAquaBlue"
+                            //classname = wfull if current view underline blue and text blue else text white , text bold 2xl
+                            className={
+                                currentView === "Permissions"
+                                    ? "w-full text-adminAquaBlue border-b-2 border-b-adminAquaBlue font-bold text-2xl"
+                                    : "w-full text-white font-bold text-2xl"
+                            }
                             onClick={() => {
                                 setCurrentView("Permissions");
                             }}

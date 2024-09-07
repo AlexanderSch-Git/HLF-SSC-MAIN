@@ -3,6 +3,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Select from "react-select";
 import React from "react";
 import { useState } from "react";
+import { useEffect } from "react";
+import { router } from "@inertiajs/react";
+import { toast } from "react-toastify";
 
 export default function SuperAdminRolePerm(props) {
     // Etat pour les permissions triées par le champ
@@ -42,9 +45,58 @@ export default function SuperAdminRolePerm(props) {
     }));
     console.log(props.permissionAssignations);
 
+    //useEffect on modify type to adapt the selected perms to include existing perms or not
+    useEffect(() => {
+        if (modifyType === "def") {
+            if (!selectedRole) {
+                toast.error("Veuillez selectionner un rôle");
+                setModifyType(null);
+                return;
+            }
+            setSelectedPerms([]);
+        } else if (modifyType === "edit") {
+            //vérifier si le role est selectionné
+            if (!selectedRole) {
+                toast.error("Veuillez selectionner un rôle");
+                setModifyType(null);
+                return;
+            }
+            //we need props.permissionAssignations[currentRole] to get the perms
+            var perms = props.permissionAssignations[selectedRole];
+            console.log(perms);
+            // remap the perms to array from permissions matching the name
+            var perms = perms.map((perm) =>
+                props.permissions.find((permission) => permission.name === perm)
+            );
+            console.log(perms);
+            setSelectedPerms(perms);
+            handleSortPerms();
+        }
+    }, [modifyType]);
+
     const executeAction = () => {
-        return;
+        //vérfier si le role est selectionné
+        if (!selectedRole) {
+            toast.error("Veuillez selectionner un rôle");
+            return;
+        }
+        // same function everytime , due to previous role list adaptation to modifyType
+        const perms = selectedPerms.map((perm) => perm.name);
+        const data = {
+            role: selectedRole,
+            permissions: perms,
+        };
+        router.post("/superadmin/editPermissionsOfRole", { data });
+        toast.success("Permissions modifiées avec succès");
+        setModifyType(null);
+        setSelectedPerms([]);
     };
+    //useeffect on the role to set the rest back to null
+    useEffect(() => {
+        setSelectedPerms([]);
+        setModifyType(null);
+        handleSortPerms();
+    }, [selectedRole]);
     return (
         <>
             <div className="h-full w-full flex flex-row space-x-2 overflow-clip">
@@ -71,30 +123,18 @@ export default function SuperAdminRolePerm(props) {
                     </div>
                     <div className="w-full h-full overflow-y-auto">
                         {sortedPerms.map((permission) => (
-                            <>
-                                <div
-                                    key={permission.id}
-                                    className="flex flex-row"
-                                >
-                                    <div className="w-11/12">
-                                        {permission.name}
-                                    </div>
-                                    <div className="w-1/12">
-                                        {/*add a checkbox when checked add to as
-                                        usestate the name, when unchecked remove
-                                        from usestate*/}
-                                        <input
-                                            type="checkbox"
-                                            checked={selectedPerms.includes(
-                                                permission
-                                            )}
-                                            onChange={() =>
-                                                handleCheckboxChange(permission)
-                                            }
-                                        />
-                                    </div>
-                                </div>
-                            </>
+                            <div
+                                key={permission.id}
+                                //if selectedPerms includes permission text adminAquaBlue else text-adminDarkBlue
+                                className={`w-11/12 p-2 rounded-full ${
+                                    selectedPerms.includes(permission)
+                                        ? "text-green-500 text-bold text-xl"
+                                        : "text-primGrey"
+                                }`}
+                                onClick={() => handleCheckboxChange(permission)}
+                            >
+                                {permission.name}
+                            </div>
                         ))}
                     </div>
                 </div>
@@ -110,7 +150,7 @@ export default function SuperAdminRolePerm(props) {
                                 <>
                                     <div
                                         key={permission.id}
-                                        className="w-11/12"
+                                        className="w-full text-primGrey"
                                     >
                                         {permission.name}
                                     </div>
@@ -118,7 +158,7 @@ export default function SuperAdminRolePerm(props) {
                             ))}
                         </div>
                         <div
-                            className="py-1 tracking-wider rounded-full bg-primGrey text-center px-8 text-adminLightPink text-xl border-2 border-glassStroke hover:text-adminLightPurple"
+                            className="py-1 tracking-wider rounded-full bg-primGrey text-center px-8 text-adminLightPink text-xl border-2 border-glassStroke hover:text-adminAquaBlue hover:glassmorphism"
                             onClick={() => {
                                 executeAction();
                             }}
@@ -144,7 +184,7 @@ export default function SuperAdminRolePerm(props) {
                             {/*A faire apres -> ajouter un bouton de selecteur de mode de modif : def , edit */}
                             <div className="flex flex-row w-full items-center justify-center">
                                 <div
-                                    className={`w-60 text-center font-bold text-xl ${
+                                    className={`w-60 text-center font-bold text-xl hover:glassmorphism ${
                                         modifyType === "def"
                                             ? "text-adminAquaBlue border-2 rounded-full border-adminAquaBlue"
                                             : "text-adminDarkBlue"
@@ -154,7 +194,7 @@ export default function SuperAdminRolePerm(props) {
                                     Definition
                                 </div>
                                 <div
-                                    className={`w-60 text-center font-bold text-xl ${
+                                    className={`w-60 text-center font-bold text-xl hover:glassmorphism ${
                                         modifyType === "edit"
                                             ? "text-adminAquaBlue border-2 rounded-full border-adminAquaBlue"
                                             : "text-adminDarkBlue"

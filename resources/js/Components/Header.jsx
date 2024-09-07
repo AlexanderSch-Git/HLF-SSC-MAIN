@@ -6,7 +6,7 @@ import {
     faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import TextInput from "@/Components/TextInput";
-import { Link } from "@inertiajs/react";
+import { Head, Link } from "@inertiajs/react";
 
 export default function Header(props) {
     return (
@@ -33,7 +33,7 @@ export default function Header(props) {
                                         id="search"
                                         type="text"
                                         name="search"
-                                        className="mt-1 block w-fullh-full w-full flex text-left items-center rounded-lg px-2 outline-none border-0 border-none"
+                                        className="mt-1 w-fullh-full w-full flex text-left items-center rounded-lg px-2 outline-none border-0 border-none"
                                         autoComplete="search"
                                         placeholder="Rechercher"
                                     />
@@ -54,24 +54,70 @@ export default function Header(props) {
                 )}
                 {props.type == "admin" && (
                     <>
-                        <div className="flex flex-row items-center space-x-4">
-                            <div className="w-36 h-8 flex items-center justify-center bg-white rounded-full text-primRed">
-                                <Link href="/humains">humain</Link>
-                            </div>
-                            <div className="w-36 h-8 flex items-center justify-center bg-white rounded-full text-primRed">
-                                <Link href="/profs">professeurs</Link>
-                            </div>
-                            <div className="w-36 h-8 flex items-center justify-center bg-white rounded-full text-primRed">
-                                <Link href="/options">options</Link>
-                            </div>
-                            <div className="w-36 h-8 flex items-center justify-center bg-white rounded-full text-primRed">
-                                <Link href="/gcs">groupes classes</Link>
-                            </div>
-                            <div className="w-36 h-8 flex items-center justify-center bg-white rounded-full text-primRed">
-                                <Link href="/cours">cours</Link>
-                            </div>
-                            <div className="w-36 h-8 flex items-center justify-center bg-white rounded-full text-primRed">
-                                <Link href="/seances">séance</Link>
+                        <Head title={props.titre} />
+                        <div className="w-full flex justify-end">
+                            <div className="flex flex-row w-2/3 justify-between px-8 items-center">
+                                <Link
+                                    href="/humains"
+                                    //if props.titre == humains then add text-primRed
+                                    className={`font-bold text-xl py-1 items-center ${
+                                        props.titre == "humains"
+                                            ? "text-primRed"
+                                            : "text-primGrey"
+                                    }`}
+                                >
+                                    Humain
+                                </Link>
+                                <Link
+                                    href="/profs"
+                                    className={`font-bold text-xl py-1 items-center ${
+                                        props.titre == "profs"
+                                            ? "text-primRed"
+                                            : "text-primGrey"
+                                    }`}
+                                >
+                                    Professeurs
+                                </Link>
+                                <Link
+                                    href="/options"
+                                    className={`font-bold text-xl py-1 items-center ${
+                                        props.titre == "options"
+                                            ? "text-primRed"
+                                            : "text-primGrey"
+                                    }`}
+                                >
+                                    Options
+                                </Link>
+                                <Link
+                                    href="/gcs"
+                                    className={`font-bold text-xl py-1 items-center ${
+                                        props.titre == "gcs"
+                                            ? "text-primRed"
+                                            : "text-primGrey"
+                                    }`}
+                                >
+                                    Groupes classes
+                                </Link>
+                                <Link
+                                    href="/cours"
+                                    className={`font-bold text-xl py-1 items-center ${
+                                        props.titre == "cours"
+                                            ? "text-primRed"
+                                            : "text-primGrey"
+                                    }`}
+                                >
+                                    Cours
+                                </Link>
+                                <Link
+                                    href="/seances"
+                                    className={`font-bold text-xl py-1 items-center ${
+                                        props.titre == "seances"
+                                            ? "text-primRed"
+                                            : "text-primGrey"
+                                    }`}
+                                >
+                                    Séance
+                                </Link>
                             </div>
                         </div>
                     </>
