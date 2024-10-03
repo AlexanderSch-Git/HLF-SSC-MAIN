@@ -1,1 +1,0 @@
-import{r,j as e}from"./app-03bf7fb2.js";import"./Dropdown-4a4abfbc.js";import{B as a}from"./BaseLayout-97c1a3d9.js";function n(t){return r.useState(!1),e.jsx(a,{...t,children:t.children})}export{n as A};

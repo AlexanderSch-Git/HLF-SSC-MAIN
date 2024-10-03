@@ -1,0 +1,1 @@
+import{r,j as e}from"./app-c2887d3d.js";import"./Dropdown-affabd52.js";import{B as a}from"./BaseLayout-55eb8e4b.js";function n(t){return r.useState(!1),e.jsx(a,{...t,children:t.children})}export{n as A};

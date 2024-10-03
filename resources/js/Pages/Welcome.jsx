@@ -74,12 +74,13 @@ export default function Welcome(props) {
                                 à votre rôle spécifique. Vous serez informé de
                                 la création des cours au fur et à mesure.
                             </p>
-                            <Link
+                            <a
                                 href="https://www.smartschoolcalendar.tech/bugreport/"
+                                rel="noopener noreferrer"
                                 className="font-bold text-l text-primGrey bg-primPink py-1 items-center w-fit rounded-full px-4 tracking-wider hover:bg-primTextBlue "
                             >
                                 Signalez vos bugs et problèmes ici
-                            </Link>
+                            </a>
                             <h2 className="text-xl italic font-bold text-primTextBlue">
                                 Curieux? Rejoindre l’alpha c’est possible et
                                 facile!

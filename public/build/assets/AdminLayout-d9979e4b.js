@@ -1,1 +1,0 @@
-import{j as e}from"./app-03bf7fb2.js";import{H as l}from"./Header-a31ae6e7.js";function o({children:r,titre:s}){return e.jsx(e.Fragment,{children:e.jsxs("div",{className:"flex flex-col h-screen w-screen overflow-hidden",children:[e.jsx(l,{type:"admin",titre:s}),e.jsx("div",{className:"w-full  bg-gray-300 p-4 h-full overflow-hidden",children:r})]})})}export{o as A};
