@@ -10,17 +10,21 @@ export default function CoursLayout({ children }) {
     return (
         <AdminLayout titre="cours">
             <div className="flex flex-row align-middle items-center text-center w-full">
-                <button className="bg-primBlue hover:bg-primRed text-white font-bold py-2 px-4 rounded">
-                    <Link href="/cours">Liste</Link>
-                </button>
-                <button className="bg-primBlue hover:bg-primRed text-white font-bold py-2 px-4 rounded">
-                    <Link href="/cour/create">+</Link>
-                </button>
-                <button className="bg-primBlue hover:bg-primRed text-white font-bold py-2 px-4 rounded">
-                    <Link href="/cour/search">
+                <Link href="/cours">
+                    <button className="bg-primBlue hover:bg-primRed text-white font-bold py-2 px-4 rounded">
+                        Liste
+                    </button>
+                </Link>
+                <Link href="/cour/create">
+                    <button className="bg-primBlue hover:bg-primRed text-white font-bold py-2 px-4 rounded">
+                        +
+                    </button>
+                </Link>{" "}
+                <Link href="/cour/search">
+                    <button className="bg-primBlue hover:bg-primRed text-white font-bold py-2 px-4 rounded">
                         <FontAwesomeIcon icon={faSearch} />
-                    </Link>
-                </button>
+                    </button>
+                </Link>
             </div>
             <div className="bg-white p-4">{children}</div>
         </AdminLayout>

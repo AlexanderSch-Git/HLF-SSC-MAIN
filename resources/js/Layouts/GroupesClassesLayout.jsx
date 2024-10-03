@@ -10,17 +10,21 @@ export default function GCLayout({ children }) {
     return (
         <AdminLayout titre="gcs">
             <div className="flex flex-row align-middle items-center text-center w-full">
-                <button className="bg-primBlue hover:bg-primRed text-white font-bold py-2 px-4 rounded">
-                    <Link href="/gcs">Liste</Link>
-                </button>
-                <button className="bg-primBlue hover:bg-primRed text-white font-bold py-2 px-4 rounded">
-                    <Link href="/gc/create">+</Link>
-                </button>
-                <button className="bg-primBlue hover:bg-primRed text-white font-bold py-2 px-4 rounded">
-                    <Link href="/gc/search">
+                <Link href="/gcs">
+                    <button className="bg-primBlue hover:bg-primRed text-white font-bold py-2 px-4 rounded">
+                        Liste
+                    </button>
+                </Link>
+                <Link href="/gc/create">
+                    <button className="bg-primBlue hover:bg-primRed text-white font-bold py-2 px-4 rounded">
+                        +
+                    </button>
+                </Link>
+                <Link href="/gc/search">
+                    <button className="bg-primBlue hover:bg-primRed text-white font-bold py-2 px-4 rounded">
                         <FontAwesomeIcon icon={faSearch} />
-                    </Link>
-                </button>
+                    </button>
+                </Link>
             </div>
             <div className="bg-white p-4">{children}</div>
         </AdminLayout>

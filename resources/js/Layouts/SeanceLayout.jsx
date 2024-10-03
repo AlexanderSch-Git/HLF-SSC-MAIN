@@ -8,17 +8,21 @@ export default function SeanceLayout({ children }) {
     return (
         <AdminLayout titre="seances">
             <div className="flex flex-row align-middle items-center text-center w-full">
-                <button className="bg-primBlue hover:bg-primRed text-white font-bold py-2 px-4 rounded">
-                    <Link href="/seances">Liste</Link>
-                </button>
-                <button className="bg-primBlue hover:bg-primRed text-white font-bold py-2 px-4 rounded">
-                    <Link href="/seance/create">+</Link>
-                </button>
-                <button className="bg-primBlue hover:bg-primRed text-white font-bold py-2 px-4 rounded">
-                    <Link href="/seance/search">
+                <Link href="/seances">
+                    <button className="bg-primBlue hover:bg-primRed text-white font-bold py-2 px-4 rounded">
+                        Liste
+                    </button>
+                </Link>
+                <Link href="/seance/create">
+                    <button className="bg-primBlue hover:bg-primRed text-white font-bold py-2 px-4 rounded">
+                        +
+                    </button>
+                </Link>
+                <Link href="/seance/search">
+                    <button className="bg-primBlue hover:bg-primRed text-white font-bold py-2 px-4 rounded">
                         <FontAwesomeIcon icon={faSearch} />
-                    </Link>
-                </button>
+                    </button>
+                </Link>
             </div>
             <div className="bg-white p-4">{children}</div>
         </AdminLayout>

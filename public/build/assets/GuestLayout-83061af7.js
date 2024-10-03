@@ -1,0 +1,1 @@
+import{j as e}from"./app-03bf7fb2.js";import{H as s}from"./Header-a31ae6e7.js";import"./index.es-c79b7abf.js";function i({children:r}){return e.jsx(e.Fragment,{children:e.jsxs("div",{className:"flex flex-col h-screen w-screen overflow-hidden bg-gray-300",children:[e.jsx(s,{type:"guest"}),e.jsx("div",{className:"m-auto border-red w-2/3 ",children:r})]})})}export{i as G};

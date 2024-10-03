@@ -1,4 +1,5 @@
 import { Head, Link } from "@inertiajs/react";
+import { Button } from "@mui/material";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -51,9 +52,14 @@ export default function Welcome(props) {
                                 l'établissement de promotion sociale, Henri La
                                 Fontaine.
                             </p>
-                            <h2 className="text-2xl  font-bold text-primTextBlue">
-                                Statut: Alpha, Proof Of Concept
-                            </h2>
+                            <div className="flex flex-row space-x-2">
+                                <h2 className="text-2xl  font-bold text-primTextBlue">
+                                    Statut:
+                                </h2>
+                                <h2 className="text-2xl  font-bold text-primPink">
+                                    Alpha, v2_0_0 | Make it work
+                                </h2>
+                            </div>
                             <h2 className="text-xl italic font-bold text-primTextBlue">
                                 Note aux alpha testeurs
                             </h2>
@@ -62,13 +68,18 @@ export default function Welcome(props) {
                                 projet!
                             </p>
                             <p>
-                                Conformément à votre brief, vous avez accès à
-                                toutes les fonctionnalités du projet. Vous êtes
-                                donc à la fois un étudiant et un professeur mais
-                                aussi un membre du Personnel Administratif. Ne
-                                vous embêtez pas à créer plusieurs comptes pour
-                                tester les différentes fonctionnalités.
+                                Merci de participer à l'alpha test du projet !
+                                Conformément à votre brief v2, votre compte ne
+                                donne accès qu’aux fonctionnalités correspondant
+                                à votre rôle spécifique. Vous serez informé de
+                                la création des cours au fur et à mesure.
                             </p>
+                            <Link
+                                href="https://www.smartschoolcalendar.tech/bugreport/"
+                                className="font-bold text-l text-primGrey bg-primPink py-1 items-center w-fit rounded-full px-4 tracking-wider hover:bg-primTextBlue "
+                            >
+                                Signalez vos bugs et problèmes ici
+                            </Link>
                             <h2 className="text-xl italic font-bold text-primTextBlue">
                                 Curieux? Rejoindre l’alpha c’est possible et
                                 facile!
@@ -85,18 +96,14 @@ export default function Welcome(props) {
                                 données peuvent changer à tout moment, et être
                                 supprimées à tout moment.
                             </p>
-                            <p>
-                                Vous n'avez pas accès à la plateforme de ticket
-                                pour signaler les bugs. Vous devez passer par la
-                                personne qui vous a donné le lien.
-                            </p>
                         </div>
                         <div className="flex flex-col space-y-3">
                             <h2 className="text-2xl  font-bold text-primTextBlue">
-                                Bon test & Merci!,
+                                Bon test & Merci!
                             </h2>
                             <h2 className="text-xl italic font-bold text-primTextBlue">
-                                Une question? Un problème? Contactez-moi!
+                                Une question? Un problème? Vous êtes membre du
+                                PA / PE? Contactez-moi!
                                 <br />
                                 Alexander.schwandes@hainaut-promsoc.be
                             </h2>
@@ -107,13 +114,13 @@ export default function Welcome(props) {
                             <div className="flex w-5/6 flex-row  justify-between">
                                 <Link
                                     href="/dashboard"
-                                    className="font-bold text-xl text-primTextBlue py-1 items-center"
+                                    className="font-bold text-xl text-primTextBlue py-1 items-center hover:text-primPink"
                                 >
                                     Dashboard
                                 </Link>
                                 <Link
                                     href="/humains"
-                                    className="font-bold text-xl text-primTextBlue py-1 items-center"
+                                    className="font-bold text-xl text-primTextBlue py-1 items-center hover:text-primPink"
                                 >
                                     Administration
                                 </Link>
@@ -121,13 +128,13 @@ export default function Welcome(props) {
                                     href="https://docs.smartschoolcalendar.tech"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="font-bold text-xl text-primTextBlue py-1 items-center"
+                                    className="font-bold text-xl text-primTextBlue py-1 items-center hover:text-primPink"
                                 >
                                     Documentation
                                 </a>
                                 <Link
                                     href="/login"
-                                    className="font-bold text-xl bg-primPink hover:bg-primTextBlue text-white px-4 py-1 items-center rounded-full"
+                                    className="font-bold text-xl bg-primPink hover:bg-primTextBlue text-primGrey px-4 py-1 items-center rounded-full"
                                 >
                                     Connexion
                                 </Link>

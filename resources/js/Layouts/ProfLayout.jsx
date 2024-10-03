@@ -8,17 +8,21 @@ export default function ProfLayout({ children }) {
     return (
         <AdminLayout titre="profs">
             <div className="flex flex-row align-middle items-center text-center w-full">
-                <button className="bg-primBlue hover:bg-primRed text-white font-bold py-2 px-4 rounded">
-                    <Link href="/profs">Liste</Link>
-                </button>
-                <button className="bg-primBlue hover:bg-primRed text-white font-bold py-2 px-4 rounded">
-                    <Link href="/prof/create">+</Link>
-                </button>
-                <button className="bg-primBlue hover:bg-primRed text-white font-bold py-2 px-4 rounded">
-                    <Link href="/prof/search">
+                <Link href="/profs">
+                    <button className="bg-primBlue hover:bg-primRed text-white font-bold py-2 px-4 rounded">
+                        Liste
+                    </button>
+                </Link>{" "}
+                <Link href="/prof/create">
+                    <button className="bg-primBlue hover:bg-primRed text-white font-bold py-2 px-4 rounded">
+                        +
+                    </button>
+                </Link>{" "}
+                <Link href="/prof/search">
+                    <button className="bg-primBlue hover:bg-primRed text-white font-bold py-2 px-4 rounded">
                         <FontAwesomeIcon icon={faSearch} />
-                    </Link>
-                </button>
+                    </button>
+                </Link>
             </div>
             <div className="bg-white p-4">{children}</div>
         </AdminLayout>

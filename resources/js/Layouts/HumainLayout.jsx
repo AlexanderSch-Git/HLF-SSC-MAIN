@@ -11,17 +11,21 @@ export default function HumainLayout({ children }) {
     return (
         <AdminLayout titre="humains">
             <div className="flex flex-row align-middle items-center text-center justify-start w-full">
-                <button className="bg-primBlue hover:bg-primRed text-white font-bold py-2 px-4 rounded">
-                    <Link href="/humains">Liste</Link>
-                </button>
-                <button className="bg-primBlue hover:bg-primRed text-white font-bold py-2 px-4 rounded">
-                    <Link href="/humain/create">+</Link>
-                </button>
-                <button className="bg-primBlue hover:bg-primRed text-white font-bold py-2 px-4 rounded">
-                    <Link href="/humain/search">
+                <Link href="/humains">
+                    <button className="bg-primBlue hover:bg-primRed text-white font-bold py-2 px-4 rounded">
+                        Liste
+                    </button>
+                </Link>
+                <Link href="/humain/create">
+                    <button className="bg-primBlue hover:bg-primRed text-white font-bold py-2 px-4 rounded">
+                        +
+                    </button>
+                </Link>
+                <Link href="/humain/search">
+                    <button className="bg-primBlue hover:bg-primRed text-white font-bold py-2 px-4 rounded">
                         <FontAwesomeIcon icon={faSearch} />
-                    </Link>
-                </button>
+                    </button>
+                </Link>
             </div>
             <div className="bg-white p-4">{children}</div>
         </AdminLayout>
